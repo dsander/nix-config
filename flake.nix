@@ -12,7 +12,7 @@
     };
     nix-darwin = {
       url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -55,6 +55,7 @@
               # adds unstable to be available in top-level evals (like in common-packages)
               { _module.args = { inherit unstablePkgs stablePkgs; }; }
 
+              ./hosts/common/base.nix
               ./hosts/nixos/${hostName} # ip address, host specific stuff
               vscode-server.nixosModules.default
               home-manager.nixosModules.home-manager
@@ -82,6 +83,7 @@
               # adds unstable to be available in top-level evals (like in common-packages)
               { _module.args = { inherit unstablePkgs stablePkgs; }; }
 
+              ./hosts/common/base.nix
               ./hosts/darwin/${hostName} # ip address, host specific stuff
               home-manager.darwinModules.home-manager
               {

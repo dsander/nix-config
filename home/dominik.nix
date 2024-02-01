@@ -5,12 +5,8 @@ let
     "/Applications/Postgres.app/Contents/Versions/latest/bin"
   ];
   pathOverrides = stablePkgs.lib.lists.optionals stablePkgs.stdenv.isDarwin darwinPathOverrides ++ [
-    # We should figure out why we have to set the nix profile paths ourselves here
-    "/etc/profiles/per-user/$USER/bin"
-    "/run/current-system/sw/bin"
     "$HOME/.cargo/bin"
     "$HOME/bin"
-    "$PATH"
   ];
 in
 {
@@ -29,8 +25,8 @@ in
     DEFAULT_USER = "dominik";
     BUNDLER_EDITOR = "nvim";
     GIT_EDITOR = "nvim";
-    PATH = (builtins.concatStringsSep ":" pathOverrides);
   };
+  home.sessionPath = pathOverrides;
 
   programs.direnv = {
     enable = true;
@@ -39,7 +35,7 @@ in
 
   programs.fzf = {
     enable = true;
-    enableZshIntegration = true;
+    enableZshIntegration = false; # If we enable this, remove the junegunn/fzf plugins
     tmux.enableShellIntegration = true;
   };
 
@@ -49,6 +45,7 @@ in
 
   programs.ripgrep = {
     enable = true;
+    package = unstablePkgs.ripgrep;
     arguments = [
       "--max-columns=5000"
       "--max-columns-preview"
@@ -142,6 +139,11 @@ in
   programs.atuin = {
     enable = true;
     package = unstablePkgs.atuin;
+    settings = {
+      # This should be more efficient, lets try to learn it
+      enter_accept = true;
+      filter_mode_shell_up_key_binding = "directory";
+    };
   };
 
   home.file = {
@@ -172,9 +174,5 @@ in
   };
 
   programs.home-manager.enable = true;
-  # home.packages = with stablePkgs; [
-  #   # bash
-  # ];
-
 }
 
