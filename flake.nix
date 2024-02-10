@@ -97,7 +97,7 @@
             ];
           };
 
-      linuxSystem = system: hostName: username:
+      linuxSystem = { system, hostName, username, homeDirectory ? "/home/${username}" }:
         let
           stablePkgs = genPkgs system;
           unstablePkgs = genUnstablePkgs system;
@@ -113,7 +113,7 @@
               {
                 home = {
                   username = username;
-                  homeDirectory = "/home/${username}";
+                  homeDirectory = homeDirectory;
                   packages = import ./hosts/common/common-packages.nix { inherit unstablePkgs stablePkgs; };
                 };
               }
@@ -131,7 +131,7 @@
       };
 
       homeManagerConfigurations = {
-        ubuntu-nix = linuxSystem "x86_64-linux" "nix-hm-test" "dominik";
+        lima-ubuntu-lts = linuxSystem { system = "x86_64-linux"; hostName = "lima-ubuntu-lts"; username = "dominik"; homeDirectory = "/home/dominik.linux"; };
       };
     };
 }

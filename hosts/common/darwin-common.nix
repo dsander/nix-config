@@ -76,6 +76,7 @@ in
       # "synergy-core"
       # "tailscale"
       "gnu-time"
+      "lima"
       {
         name = "neovim";
         link = false; # Dependency of neovide, we want to use neovim from nix

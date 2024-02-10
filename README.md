@@ -1,6 +1,18 @@
 # nix-macos-testing
 
 
+## Testing flake on a ubuntu VM
+
+```
+# Manually edit the config file and make the home directroy writable
+limactl create --mount-type 9p --arch=x86_64 template://ubuntu-lts
+limactl shell ubuntu-lts
+sudo apt-get install -y make
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --extra-conf "warn-dirty = false"
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+make
+```
+
 ## Getting started on a new Mac
 
 Give full disk access to Terminal.
@@ -21,7 +33,7 @@ Clone the repo
 git clone https://github.com/dsander/nix-testing
 cd nix-testing
 eval "$(/opt/homebrew/bin/brew shellenv)"
-brew install just
+make
 ```
 
 Clean the dock
