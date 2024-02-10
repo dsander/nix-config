@@ -31,6 +31,7 @@ with stablePkgs; [
   fd
   #fzf # programs.fzf
   git # programs.git
+  unstablePkgs.git-absorb
   # gh
   # go
   gnused
