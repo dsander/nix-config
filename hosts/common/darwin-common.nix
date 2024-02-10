@@ -76,6 +76,14 @@ in
       # "synergy-core"
       # "tailscale"
       "gnu-time"
+      {
+        name = "neovim";
+        link = false; # Dependency of neovide, we want to use neovim from nix
+      }
+      {
+        name = "tree-sitter";
+        link = false; # Dependency of neovide, we want to use neovim from nix
+      }
     ];
     casks = [
       # #"alfred" # you are on alfred4 not 5
@@ -146,6 +154,7 @@ in
       "macwhisper"
       "musicbrainz-picard"
       "nextcloud"
+      "neovide"
       "ngrok"
       "utm"
       # "osxfuse"
