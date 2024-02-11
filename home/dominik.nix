@@ -65,7 +65,10 @@ in
 
   programs.git = {
     enable = true;
-    delta.enable = true;
+    delta = {
+      enable = true;
+      options = { max-line-length = 2048; };
+    };
     lfs.enable = true;
     userEmail = "git@dsander.de";
     userName = "Dominik Sander";

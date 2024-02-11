@@ -3,11 +3,13 @@
 with stablePkgs; [
   ## unstable
   unstablePkgs.yt-dlp
+  unstablePkgs.act
 
   ## stable
   nixpkgs-fmt
   nil
   ansible
+  ansible-lint
   sshpass
   asciinema
   # bitwarden-cli
@@ -58,6 +60,7 @@ with stablePkgs; [
   wget
   wireguard-tools
   vim
+  sshfs
 
   # requires nixpkgs.config.allowUnfree = true;
   # vscode-extensions.ms-vscode-remote.remote-ssh

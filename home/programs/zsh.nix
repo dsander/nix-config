@@ -51,6 +51,7 @@ in
       POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS = [
         "status" # exit code of the last command
         "command_execution_time" # duration of the last command
+        "terraform" # terraform workspace
       ];
       POWERLEVEL9K_MODE = "nerdfont-complete";
       POWERLEVEL9K_VCS_DISABLE_GITSTATUS_FORMATTING = false;
@@ -66,6 +67,7 @@ in
       nhscp = "scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no";
       cleanup = "find . -name '*.DS_Store' -type f -ls -delete";
       vim = "nvim";
+      dokku = "bash ~/code/infrastructure/dokku/contrib/dokku_client.sh";
     };
     initExtraFirst = ''
       # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
