@@ -132,6 +132,7 @@
 
       homeManagerConfigurations = {
         lima-ubuntu-lts = linuxSystem { system = "x86_64-linux"; hostName = "lima-ubuntu-lts"; username = "dominik"; homeDirectory = "/home/dominik.linux"; };
+        workstation = linuxSystem { system = "x86_64-linux"; hostName = "workstation"; username = "dominik"; };
       };
     };
 }
