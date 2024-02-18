@@ -79,6 +79,29 @@ in
       mrge.ff = "only";
       init.templateDir = "~/.git_template";
       # color.ui = true; # We probably want the default of auto
+      init.defaultBranch = "main";
+      merge.conflictstyle = "zdiff3";
+      rebase.autosquash = true;
+      commit.verbose = true;
+      rerere.enabled = true;
+      diff.algorithm = "histogram";
+      transfer.fsckobjects = true;
+      fetch.fsckobjects = true;
+      receive.fsckObjects = true;
+      status.submoduleSummary = true;
+      diff.submodule = "log";
+      rebase.updateRefs = true;
+      url = {
+        "ssh://git@github.com/" = {
+          insteadOf = "https://github.com/";
+        };
+        "ssh://git@gitlab.com/" = {
+          insteadOf = "https://gitlab.com/";
+        };
+        "ssh://git@gitlab.office.flavoursys.com" = {
+          insteadOf = "https://gitlab.office.flavoursys.com/";
+        };
+      };
     };
     aliases = {
       co = "checkout";
