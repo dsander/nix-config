@@ -75,8 +75,7 @@ in
     extraConfig = {
       push.default = "simple";
       fetch.prune = true;
-      rebase.autoStash = true;
-      mrge.ff = "only";
+      merge.ff = "only";
       init.templateDir = "~/.git_template";
       # color.ui = true; # We probably want the default of auto
       init.defaultBranch = "main";
