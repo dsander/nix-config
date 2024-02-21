@@ -77,6 +77,7 @@ in
       # "tailscale"
       "gnu-time"
       "lima"
+      "libyaml"
       {
         name = "neovim";
         link = false; # Dependency of neovide, we want to use neovim from nix

@@ -4,6 +4,9 @@ let
     if pkgs.stdenv.isDarwin then
       ''
         eval "$(/opt/homebrew/bin/brew shellenv)"
+        # This seems to be necessary now to install psych (we also need libyaml)
+        export CPATH=$(brew --prefix)/include
+        export LIBRARY_PATH=$(brew --prefix)/lib
 
         # enable colored output from ls, etc. on FreeBSD-based systems
         export CLICOLOR=1
