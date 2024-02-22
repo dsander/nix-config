@@ -77,6 +77,17 @@ somehow manually prepend the nixpgs node path in the neovim config?
 
 Why does this suffix and not postfix the nix store path?!? https://github.com/NixOS/nixpkgs/blob/5eeded8e3518579daa13887297efa79f5be74b41/pkgs/applications/editors/neovim/utils.nix#L98
 
+More context:
+home-manager extraPackages for neovim used to use `prefix` in `extraMakeWrapperArgs` but switched to
+`suffix` as similar to how the neovim package does it. The reasoning is to make it work similar to
+direnv and other tools that switch the underlying PATH when vim is used more like an IDE. We do not
+need it at the moment but could become an issue if we used it more like this.
+https://www.github.com/nix-community/home-manager/pull/1756#issuecomment-770442362
+https://www.github.com/nix-community/home-manager/issues/4330
+
+Maybe we could wrap neovim in a flake or manually add things to `extraMakeWrapperArgs` unsure if
+that is worth it though.
+
 ## Proxmox NixOS research / resources
 
 As per usual there isn't a working guide out there, what we want to do
