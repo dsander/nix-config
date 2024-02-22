@@ -167,7 +167,7 @@ in
     settings = {
       # This should be more efficient, lets try to learn it
       enter_accept = true;
-      filter_mode_shell_up_key_binding = "directory";
+      filter_mode_shell_up_key_binding = "session";
     };
   };
 
