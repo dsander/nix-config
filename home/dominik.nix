@@ -97,7 +97,7 @@ in
         "ssh://git@gitlab.com/" = {
           insteadOf = "https://gitlab.com/";
         };
-        "ssh://git@gitlab.office.flavoursys.com" = {
+        "ssh://git@gitlab.office.flavoursys.com/" = {
           insteadOf = "https://gitlab.office.flavoursys.com/";
         };
       };
