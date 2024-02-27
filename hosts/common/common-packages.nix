@@ -33,6 +33,7 @@ with stablePkgs; [
   fd
   #fzf # programs.fzf
   git # programs.git
+  gitflow
   unstablePkgs.git-absorb
   # gh
   # go
