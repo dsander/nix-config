@@ -4,6 +4,7 @@ with stablePkgs; [
   ## unstable
   unstablePkgs.yt-dlp
   unstablePkgs.act
+  unstablePkgs.rbw
 
   ## stable
   nixpkgs-fmt
