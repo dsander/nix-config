@@ -5,6 +5,7 @@ with stablePkgs; [
   unstablePkgs.yt-dlp
   unstablePkgs.act
   unstablePkgs.rbw
+  unstablePkgs._1password
 
   ## stable
   nixpkgs-fmt

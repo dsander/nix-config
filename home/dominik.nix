@@ -89,6 +89,10 @@ in
       receive.fsckObjects = true;
       status.submoduleSummary = true;
       diff.submodule = "log";
+      diff.ansible-vault = {
+        textconv = "f() { ansible-vault view \"$1\" 2>/dev/null || cat \"$1\"; }; f";
+        cachetextconv = false;
+      };
       rebase.updateRefs = true;
       url = {
         "ssh://git@github.com/" = {
