@@ -84,9 +84,9 @@ in
       commit.verbose = true;
       rerere.enabled = true;
       diff.algorithm = "histogram";
-      transfer.fsckobjects = true;
-      fetch.fsckobjects = true;
-      receive.fsckObjects = true;
+      # transfer.fsckobjects = true;
+      # fetch.fsckobjects = true;
+      # receive.fsckObjects = true;
       status.submoduleSummary = true;
       diff.submodule = "log";
       diff.ansible-vault = {
