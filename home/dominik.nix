@@ -202,6 +202,13 @@ in
     #   target = ".npmrc";
     # };
   };
+  # programs.syncthing = {
+  #   enable = true;
+  #   package = unstablePkgs.syncthing;
+  # };
+  services.syncthing = {
+    enable = true;
+  };
 
   programs.home-manager.enable = true;
 }
