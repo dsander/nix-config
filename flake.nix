@@ -42,6 +42,10 @@
         config.allowUnfree = true;
       };
 
+      customModules = [
+        ./modules/services/syncthing.nix
+      ];
+
       # creates a nixos system config
       nixosSystem = system: hostName: username:
         let
@@ -67,7 +71,7 @@
                 home-manager.extraSpecialArgs = { inherit unstablePkgs stablePkgs; };
               }
               ./hosts/common/nixos-common.nix
-            ];
+            ] ++ customModules;
           };
 
       # creates a macos system config
@@ -94,7 +98,7 @@
                 home-manager.extraSpecialArgs = { inherit unstablePkgs stablePkgs; };
               }
               ./hosts/common/darwin-common.nix
-            ];
+            ] ++ customModules;
           };
 
       linuxSystem = { system, hostName, username, homeDirectory ? "/home/${username}" }:
@@ -117,7 +121,7 @@
                   packages = import ./hosts/common/common-packages.nix { inherit unstablePkgs stablePkgs; };
                 };
               }
-            ];
+            ] ++ customModules;
           };
     in
     {
