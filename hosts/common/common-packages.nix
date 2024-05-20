@@ -65,6 +65,7 @@ with stablePkgs; [
   wireguard-tools
   vim
   sshfs
+  clang-tools # openscad formatting
 
   # requires nixpkgs.config.allowUnfree = true;
   # vscode-extensions.ms-vscode-remote.remote-ssh

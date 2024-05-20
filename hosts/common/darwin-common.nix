@@ -158,6 +158,7 @@ in
       "nextcloud"
       "neovide"
       "ngrok"
+      "numi"
       "utm"
       # "osxfuse"
       "openscad"
@@ -179,7 +180,7 @@ in
       "viscosity"
       "visual-studio-code"
       "vlc"
-
+      "raspberry-pi-imager"
     ];
     masApps = {
       # "Bitwarden" = 1352778147;
