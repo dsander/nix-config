@@ -37,6 +37,7 @@ in
     enable = true;
     enableZshIntegration = false; # If we enable this, remove the junegunn/fzf plugins
     tmux.enableShellIntegration = true;
+    package = unstablePkgs.fzf;
   };
 
   programs.gh = {

@@ -6,6 +6,7 @@ with stablePkgs; [
   unstablePkgs.act
   unstablePkgs.rbw
   unstablePkgs._1password
+  unstablePkgs.rclone
 
   ## stable
   nixpkgs-fmt
