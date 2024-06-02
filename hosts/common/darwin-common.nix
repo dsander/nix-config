@@ -60,6 +60,7 @@ in
 
   environment.systemPackages = with stablePkgs; [
     exiftool
+    unstablePkgs.lima
   ];
 
   homebrew = {
@@ -76,8 +77,8 @@ in
       # "synergy-core"
       # "tailscale"
       "gnu-time"
-      "lima"
       "libyaml"
+      "mactop"
       {
         name = "neovim";
         link = false; # Dependency of neovide, we want to use neovim from nix
