@@ -14,7 +14,11 @@ in
     ./programs/zsh.nix
   ];
   home.stateVersion = "23.11";
-  disabledModules = [ "${modulesPath}/services/syncthing.nix" ];
+  disabledModules =
+    if stablePkgs.stdenv.isDarwin then
+      [ ]
+    else
+      [ "${modulesPath}/services/syncthing.nix" ];
 
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
@@ -204,11 +208,14 @@ in
     # };
   };
 
-  services.syncthing = {
-    enable = true;
-    tray.enable = true;
-    package = unstablePkgs.syncthing;
-  };
+  services.syncthing =
+    if stablePkgs.stdenv.isDarwin then
+      { enable = false; }
+    else {
+      enable = true;
+      tray.enable = true;
+      package = unstablePkgs.syncthing;
+    };
 
   programs.home-manager.enable = true;
 }

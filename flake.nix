@@ -98,7 +98,8 @@
                 home-manager.extraSpecialArgs = { inherit unstablePkgs stablePkgs; };
               }
               ./hosts/common/darwin-common.nix
-            ] ++ customModules;
+              # ] ++ customModules;
+            ];
           };
 
       linuxSystem = { system, hostName, username, homeDirectory ? "/home/${username}" }:
