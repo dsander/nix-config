@@ -13,7 +13,7 @@ in
   imports = [
     ./programs/zsh.nix
   ];
-  home.stateVersion = "23.11";
+  home.stateVersion = "24.05";
   disabledModules =
     if stablePkgs.stdenv.isDarwin then
       [ ]
