@@ -15,6 +15,7 @@ with stablePkgs; [
   ansible-lint
   sshpass
   asciinema
+  unstablePkgs.btop
   # bitwarden-cli
   coreutils
   diffr # Modern Unix `diff`
