@@ -7,6 +7,8 @@ with stablePkgs; [
   unstablePkgs.rbw
   unstablePkgs._1password
   unstablePkgs.rclone
+  unstablePkgs.lazygit
+  unstablePkgs.lazydocker
 
   ## stable
   nixpkgs-fmt
