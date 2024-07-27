@@ -2,7 +2,7 @@
 
 with stablePkgs; [
   ## unstable
-  unstablePkgs.yt-dlp
+  # unstablePkgs.yt-dlp # does not build on darwin at the moment
   unstablePkgs.act
   unstablePkgs.rbw
   unstablePkgs._1password
