@@ -27,6 +27,26 @@
     , ...
     }:
     let
+      overlays = [
+        (final: prev: {
+          rbw = prev.rbw.override {
+            rustPlatform = prev.rustPlatform // {
+              buildRustPackage = args:
+                prev.rustPlatform.buildRustPackage (args // {
+                  version = "1.12.1";
+                  src = prev.fetchFromGitHub {
+                    owner = "doy";
+                    repo = "rbw";
+                    rev = "1.12.1";
+                    hash = "sha256-+1kalFyhk2UL+iVzuFLDsSSTudrd4QpXw+3O4J+KsLc=";
+                  };
+                  cargoHash = "sha256-cKbbsDb449WANGT+x8APhzs+hf5SR3RBsCBWDNceRMA=";
+                });
+            };
+          };
+        })
+      ];
+
       inputs = { inherit nix-darwin home-manager nixpkgs nixpkgs-unstable; };
       # creates correct package sets for specified arch
       genPkgs = system: import nixpkgs {
@@ -36,6 +56,7 @@
       genUnstablePkgs = system: import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
+        overlays = overlays;
       };
       genDarwinPkgs = system: import nixpkgs-darwin {
         inherit system;
