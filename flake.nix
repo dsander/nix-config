@@ -115,11 +115,10 @@
                 networking.hostName = hostName;
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.users.${username} = { imports = [ ./home/${username}.nix ]; };
+                home-manager.users.${username} = { imports = [ ./home/${username}.nix ] ++ customModules; };
                 home-manager.extraSpecialArgs = { inherit unstablePkgs stablePkgs; };
               }
               ./hosts/common/darwin-common.nix
-              # ] ++ customModules;
             ];
           };
 

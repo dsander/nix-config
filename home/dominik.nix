@@ -14,11 +14,7 @@ in
     ./programs/zsh.nix
   ];
   home.stateVersion = "24.05";
-  disabledModules =
-    if stablePkgs.stdenv.isDarwin then
-      [ ]
-    else
-      [ "${modulesPath}/services/syncthing.nix" ];
+  disabledModules = [ "${modulesPath}/services/syncthing.nix" ];
 
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
