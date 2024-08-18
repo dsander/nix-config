@@ -98,13 +98,13 @@ in
       rebase.updateRefs = true;
       url = {
         "ssh://git@github.com/" = {
-          insteadOf = "https://github.com/";
+          pushInsteadOf = "https://github.com/";
         };
         "ssh://git@gitlab.com/" = {
-          insteadOf = "https://gitlab.com/";
+          pushInsteadOf = "https://gitlab.com/";
         };
         "ssh://git@gitlab.office.flavoursys.com/" = {
-          insteadOf = "https://gitlab.office.flavoursys.com/";
+          pushInsteadOf = "https://gitlab.office.flavoursys.com/";
         };
       };
     };
