@@ -78,7 +78,7 @@ zinit ice wait lucid
 zinit snippet OMZP::rust
 
 zinit ice wait as"completion" lucid
-zinit snippet https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/gem/_gem
+zinit snippet https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/gem/completions/_gem
 
 zinit ice wait as"completion" lucid
 zinit snippet https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/terraform/_terraform
