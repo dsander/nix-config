@@ -158,7 +158,6 @@ in
       "musicbrainz-picard"
       "nextcloud"
       "neovide"
-      "ngrok"
       "numi"
       "utm"
       # "osxfuse"
