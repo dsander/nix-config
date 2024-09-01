@@ -127,6 +127,7 @@ in
       dc = "diff --cached";
       pushb = "!git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`";
       branch-history = "for-each-ref --sort=committerdate refs/heads/ --format='%(color: yellow)%(committerdate:short) %(color: cyan)%(refname:short)  %(color: reset)%(subject)'";
+      du = "!git diff @{u}";
     };
     ignores = [
       ".DS_Store"
