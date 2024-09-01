@@ -26,6 +26,7 @@ in
     DEFAULT_USER = "dominik";
     BUNDLER_EDITOR = "nvim";
     GIT_EDITOR = "nvim";
+    COMPOSE_MENU = "0";
   };
   home.sessionPath = pathOverrides;
 
