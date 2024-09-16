@@ -230,6 +230,23 @@ in
       package = unstablePkgs.syncthing;
     };
 
+  programs.ssh = {
+    enable = true;
+    extraConfig =
+      if stablePkgs.stdenv.isDarwin then ''
+        Include ~/.orbstack/ssh/config
+      '' else '''';
+    serverAliveInterval = 10;
+    serverAliveCountMax = 3;
+    matchBlocks = {
+      "dev-vm" = {
+        hostname = "dev-vm.lan";
+        user = "dominik";
+        forwardAgent = true;
+      };
+    };
+  };
+
   programs.home-manager.enable = true;
 }
 
