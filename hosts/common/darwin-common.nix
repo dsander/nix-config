@@ -6,6 +6,8 @@ in
   # Nix configuration ------------------------------------------------------------------------------
   users.users.dominik.home = "/Users/dominik";
 
+  system.stateVersion = 5;
+
   nix = {
     #package = lib.mkDefault pkgs.unstable.nix;
     settings = {

@@ -209,6 +209,19 @@ in
     # };
   };
 
+  programs.lazygit = {
+    enable = true;
+    package = unstablePkgs.lazygit;
+    settings = {
+      git = {
+        paging = {
+          colorArg = "always";
+          pager = "delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format=\"vscode://file/{path}:{line}\"";
+        };
+      };
+    };
+  };
+
   services.syncthing =
     if stablePkgs.stdenv.isDarwin then
       { enable = false; }
