@@ -79,7 +79,6 @@ in
       push.default = "simple";
       fetch.prune = true;
       merge.ff = "only";
-      init.templateDir = "~/.git_template";
       # color.ui = true; # We probably want the default of auto
       init.defaultBranch = "main";
       merge.conflictstyle = "zdiff3";
