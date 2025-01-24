@@ -63,6 +63,7 @@ in
   environment.systemPackages = with stablePkgs; [
     exiftool
     unstablePkgs.lima
+    unstablePkgs.macmon
   ];
 
   homebrew = {

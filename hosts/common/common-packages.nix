@@ -5,7 +5,7 @@ with stablePkgs; [
   unstablePkgs.yt-dlp
   unstablePkgs.act
   unstablePkgs.rbw
-  unstablePkgs._1password
+  unstablePkgs._1password-cli
   unstablePkgs.rclone
   unstablePkgs.lazydocker
   unstablePkgs.pinentry-gtk2
@@ -47,6 +47,7 @@ with stablePkgs; [
   #htop # programs.htop
   htop
   bottom
+  iperf3
   # hub
   # hugo
   # ipmitool
