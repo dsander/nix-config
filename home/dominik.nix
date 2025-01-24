@@ -13,7 +13,7 @@ in
   imports = [
     ./programs/zsh.nix
   ];
-  home.stateVersion = "24.05";
+  home.stateVersion = "24.11";
   disabledModules = [ "${modulesPath}/services/syncthing.nix" ];
 
   # list of programs

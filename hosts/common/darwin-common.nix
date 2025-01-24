@@ -11,7 +11,7 @@ in
   nix = {
     #package = lib.mkDefault pkgs.unstable.nix;
     settings = {
-      experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+      experimental-features = [ "nix-command" "flakes" ];
       warn-dirty = false;
       max-jobs = "auto";
       extra-nix-path = "nixpkgs=flake:nixpkgs";
