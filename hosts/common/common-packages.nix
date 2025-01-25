@@ -70,6 +70,8 @@ with stablePkgs; [
   vim
   sshfs
   clang-tools # openscad formatting
+  s3cmd
+  awscli
 
   # requires nixpkgs.config.allowUnfree = true;
   # vscode-extensions.ms-vscode-remote.remote-ssh
