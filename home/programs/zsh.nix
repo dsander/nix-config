@@ -74,6 +74,7 @@ in
       cleanup = "find . -name '*.DS_Store' -type f -ls -delete";
       vim = "nvim";
       dokku = "bash ~/code/infrastructure/dokku/contrib/dokku_client.sh";
+      lg = "lazygit";
     };
     initExtraFirst = ''
       # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
