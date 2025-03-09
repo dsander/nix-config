@@ -104,7 +104,7 @@ in
           pushInsteadOf = "https://gitlab.com/";
         };
         "ssh://git@gitlab.office.flavoursys.com/" = {
-          pushInsteadOf = "https://gitlab.office.flavoursys.com/";
+          insteadOf = "https://gitlab.office.flavoursys.com/";
         };
       };
     };
