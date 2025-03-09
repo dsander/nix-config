@@ -182,6 +182,7 @@ in
       "visual-studio-code"
       "vlc"
       "raspberry-pi-imager"
+      "zed"
     ];
     masApps = {
       # "Bitwarden" = 1352778147;
