@@ -63,8 +63,7 @@ in
   environment.systemPackages = with stablePkgs; [
     exiftool
     unstablePkgs.lima
-    unstablePkgs.macmon
-  ];
+  ] ++ (if system == "aarch64-darwin" then [ unstablePkgs.macmon ] else [ ]);
 
   homebrew = {
     enable = true;
