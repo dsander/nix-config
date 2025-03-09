@@ -9,6 +9,7 @@ with stablePkgs; [
   unstablePkgs.rclone
   unstablePkgs.lazydocker
   unstablePkgs.pinentry-gtk2
+  unstablePkgs.jujutsu
 
   ## stable
   nixpkgs-fmt
