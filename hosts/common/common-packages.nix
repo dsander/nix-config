@@ -63,6 +63,7 @@ with stablePkgs; [
   # skopeo
   smartmontools
   unstablePkgs.terraform
+  unstablePkgs.opentofu
   tree
   unzip
   watch
