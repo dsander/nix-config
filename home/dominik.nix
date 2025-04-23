@@ -95,6 +95,10 @@ in
         textconv = "f() { ansible-vault view \"$1\" 2>/dev/null || cat \"$1\"; }; f";
         cachetextconv = false;
       };
+      diff.sopsdiffer = {
+        textconv = "sops decrypt";
+        cachetextconv = false;
+      };
       rebase.updateRefs = true;
       url = {
         "ssh://git@github.com/" = {
