@@ -150,6 +150,17 @@ in
     ];
   };
 
+  programs.jujutsu = {
+    enable = true;
+    package = unstablePkgs.jujutsu;
+    settings = {
+      user = {
+        email = "git@dsander.de";
+        name = "Dominik Sander";
+      };
+    };
+  };
+
   programs.neovim = {
     enable = true;
     viAlias = true;
