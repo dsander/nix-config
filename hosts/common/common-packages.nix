@@ -63,6 +63,7 @@ with stablePkgs; [
   smartmontools
   unstablePkgs.terraform
   unstablePkgs.opentofu
+  unstablePkgs.opentofu-ls
   tree
   unzip
   watch
@@ -73,6 +74,8 @@ with stablePkgs; [
   clang-tools # openscad formatting
   s3cmd
   awscli
+  go
+  golangci-lint
 
   # requires nixpkgs.config.allowUnfree = true;
   # vscode-extensions.ms-vscode-remote.remote-ssh
