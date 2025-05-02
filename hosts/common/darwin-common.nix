@@ -137,7 +137,6 @@ in
       # "soundsource"
 
       "1password"
-      "autodesk-fusion360"
       "adobe-creative-cloud"
       "aldente"
       "bambu-studio"
