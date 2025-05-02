@@ -95,13 +95,6 @@ fi
 zinit ice wait as"completion" lucid
 zinit snippet https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
 
-zinit ice wait lucid pick"asdf.sh"
-zinit load @asdf-vm/asdf
-
-# This does not work at the moment, do we even still want asdf?
-# zinit ice wait as"completion" lucid
-# zinit snippet ~/.asdf/completions/_asdf
-
 zinit ice wait lucid blockf
 zinit load zsh-users/zsh-completions
 

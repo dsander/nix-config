@@ -265,6 +265,11 @@ in
     };
   };
 
+  programs.mise = {
+    enable = true;
+    package = unstablePkgs.mise;
+  };
+
   programs.home-manager.enable = true;
 }
 
