@@ -10,6 +10,7 @@ with stablePkgs; [
   unstablePkgs.lazydocker
   unstablePkgs.pinentry-gtk2
 
+  nodejs_22
   ## stable
   nixpkgs-fmt
   nil

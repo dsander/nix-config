@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/release-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.05-darwin";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
@@ -30,6 +30,8 @@
       overlays = [
         (final: prev: {
           rbw = prev.rbw.override { };
+          nodejs = prev.nodejs_22;
+          nodejs-slim = prev.nodejs-slim_22;
         })
       ];
 
@@ -38,6 +40,7 @@
       genPkgs = system: import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+        overlays = overlays;
       };
       genUnstablePkgs = system: import nixpkgs-unstable {
         inherit system;
@@ -47,6 +50,7 @@
       genDarwinPkgs = system: import nixpkgs-darwin {
         inherit system;
         config.allowUnfree = true;
+        overlays = overlays;
       };
 
       customModules = [
