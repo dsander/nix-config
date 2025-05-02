@@ -615,20 +615,20 @@ call plug#begin('~/.vim/plugged')
 " coc {{{
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+"        \ 'coc-css',
+"        \ 'coc-emmet',
+"        \ 'coc-git',
+"        \ 'coc-html',
+"        \ 'coc-solargraph',
+"        \ 'coc-tslint-plugin',
+"        \ 'coc-tsserver',
   let g:coc_global_extensions = [
-        \ 'coc-css',
-        \ 'coc-emmet',
         \ 'coc-eslint',
-        \ 'coc-git',
-        \ 'coc-html',
         \ 'coc-json',
         \ 'coc-pairs',
         \ 'coc-prettier',
         \ 'coc-rust-analyzer',
         \ 'coc-sh',
-        \ 'coc-solargraph',
-        \ 'coc-tslint-plugin',
-        \ 'coc-tsserver',
         \ 'coc-ultisnips',
         \ 'coc-vimlsp',
         \ 'coc-yaml',
