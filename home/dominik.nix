@@ -181,6 +181,8 @@ in
   programs.tmux = {
     enable = true;
     extraConfig = (builtins.readFile ./config/tmux.conf);
+    # See https://www.github.com/nix-community/home-manager/issues/6266
+    sensibleOnTop = false;
   };
 
   programs.atuin = {
