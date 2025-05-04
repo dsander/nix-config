@@ -273,5 +273,9 @@ in
   };
 
   programs.home-manager.enable = true;
+
+  programs.zoxide = {
+    enable = true;
+  };
 }
 
