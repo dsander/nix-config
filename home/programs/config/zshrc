@@ -60,25 +60,9 @@ zle -N fuzzy-files _fuzzy_files
 bindkey '^g^f' fuzzy-files
 
 zinit ice depth=1
-zinit load romkatv/powerlevel10k
-
-zinit ice wait atload"unalias grv" lucid
-zinit snippet OMZ::plugins/git/git.plugin.zsh
-
-zinit ice wait lucid
-zinit snippet OMZ::plugins/mix-fast
-
-zinit ice wait lucid
-zinit snippet OMZ::plugins/bundler
-
-zinit ice wait as"completion" lucid
-zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
 
 zinit ice wait lucid
 zinit snippet OMZP::rust
-
-zinit ice wait as"completion" lucid
-zinit snippet https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/gem/completions/_gem
 
 zinit ice wait as"completion" lucid
 zinit snippet https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/terraform/_terraform
@@ -95,11 +79,4 @@ fi
 zinit ice wait as"completion" lucid
 zinit snippet https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
 
-zinit ice wait lucid blockf
-zinit load zsh-users/zsh-completions
-
-zinit ice wait atinit"zpcompinit; zpcdreplay" lucid
-zinit load zdharma-continuum/fast-syntax-highlighting
-
-zinit ice wait lucid
-zinit load skywind3000/z.lua
+zinit light zsh-users/zsh-completions

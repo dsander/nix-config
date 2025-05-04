@@ -38,6 +38,7 @@ in
     enable = true;
     autosuggestion.enable = true;
     enableCompletion = true;
+    # zprof.enable = true;
     history = {
       extended = true;
       save = 100000000;
@@ -118,15 +119,27 @@ in
       autoload -U colors
       colors
     '' + (builtins.readFile ./config/zshrc) + systemSpecific;
-    plugins = [{
-      name = "zinit";
-      file = "zinit.zsh";
-      src = pkgs.fetchFromGitHub {
-        owner = "zdharma-continuum";
-        repo = "zinit";
-        rev = "v3.13.1";
-        hash = "sha256-AiYK1pRFD4CGvBcQg9QwgFjc5Z564TVlWW0MzxoxdWU=";
-      };
-    }];
+    plugins = [
+      {
+        name = "zinit";
+        src = unstablePkgs.zinit;
+        file = "share/zinit/zinit.zsh";
+      }
+      {
+        name = "powerlevel10k";
+        src = unstablePkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "zsh-fast-syntax-highlighting";
+        src = pkgs.zsh-fast-syntax-highlighting;
+        file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";
+      }
+      {
+        name = "bundler";
+        src = pkgs.oh-my-zsh;
+        file = "share/oh-my-zsh/plugins/bundler/bundler.plugin.zsh";
+      }
+    ];
   };
 }
