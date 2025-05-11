@@ -67,6 +67,9 @@ zinit snippet OMZP::rust
 zinit ice wait as"completion" lucid
 zinit snippet https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/terraform/_terraform
 
+zinit ice wait lucid
+zinit snippet OMZP::jj
+
 # When atuin isn't loaded we use our previous completion methods
 if ! which atuin > /dev/null ; then
   zinit ice wait lucid
