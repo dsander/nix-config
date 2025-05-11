@@ -75,6 +75,7 @@ in
       vim = "nvim";
       dokku = "bash ~/code/infrastructure/dokku/contrib/dokku_client.sh";
       lg = "lazygit";
+      jjr = "jj log --no-pager --reversed";
     };
     initExtraFirst = ''
       # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
