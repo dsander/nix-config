@@ -78,6 +78,11 @@ with stablePkgs; [
   go
   golangci-lint
 
+  unstablePkgs.gg-jj
+  unstablePkgs.jjui
+  unstablePkgs.jj-fzf
+  unstablePkgs.lazyjj
+
   # requires nixpkgs.config.allowUnfree = true;
   # vscode-extensions.ms-vscode-remote.remote-ssh
 
