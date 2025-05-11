@@ -147,6 +147,7 @@ in
       "!tmp/cache/.keep"
       "*.pyc"
       ".project-notes"
+      ".gitignore.local"
     ];
   };
 
