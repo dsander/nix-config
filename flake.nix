@@ -55,6 +55,7 @@
 
       customModules = [
         ./modules/services/syncthing.nix
+        ./modules/programs/jujutsu.nix
       ];
 
       # creates a nixos system config

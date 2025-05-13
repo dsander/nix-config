@@ -14,7 +14,7 @@ in
     ./programs/zsh.nix
   ];
   home.stateVersion = "24.11";
-  disabledModules = [ "${modulesPath}/services/syncthing.nix" ];
+  disabledModules = [ "${modulesPath}/services/syncthing.nix" "${modulesPath}/programs/jujutsu.nix" ];
 
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
