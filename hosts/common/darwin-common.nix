@@ -328,6 +328,10 @@ in
       DisablePrintPreview = true;
       PMPrintingExpandedStateForPrint2 = true;
     };
+    "com.adobe.CSXS.12" = {
+      PlayerDebugMode = 1;
+      LogLevel = 6;
+    };
     "com.adobe.CSXS.11" = {
       PlayerDebugMode = 1;
       LogLevel = 6;
