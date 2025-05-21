@@ -178,6 +178,13 @@ in
       pager = "delta"
       [--scope.ui.diff]
       format = "git"
+
+      [aliases]
+      l = ["log", "-r", "active_bookmarks(1)"]
+
+      [revset-aliases]
+      'recent()' = 'committer_date(after:"3 months ago")'
+      'active_bookmarks(x)' = 'trunk() | ancestors(bookmarks(), x) | @'
     '';
   };
 
