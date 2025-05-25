@@ -7,8 +7,10 @@ in
   users.users.dominik.home = "/Users/dominik";
 
   system.stateVersion = 5;
+  ids.gids.nixbld = 30000;
 
   nix = {
+    enable = true;
     #package = lib.mkDefault pkgs.unstable.nix;
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -17,7 +19,6 @@ in
       extra-nix-path = "nixpkgs=flake:nixpkgs";
     };
   };
-  services.nix-daemon.enable = true;
 
   # pins to stable as unstable updates very often
   # nix.registry.nixpkgs.flake = inputs.nixpkgs;
@@ -58,12 +59,14 @@ in
   system.keyboard.remapCapsLockToEscape = true;
 
   # Add ability to used TouchID for sudo authentication
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   environment.systemPackages = with stablePkgs; [
     exiftool
     unstablePkgs.lima
   ] ++ (if system == "aarch64-darwin" then [ unstablePkgs.macmon ] else [ ]);
+
+  system.primaryUser = "dominik";
 
   homebrew = {
     enable = true;
@@ -237,9 +240,9 @@ in
   };
 
   # macOS configuration
-  system.activationScripts.postUserActivation.text = ''
+  system.activationScripts.postActivation.text = ''
     # Following line should allow us to avoid a logout/login cycle
-    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+    sudo -u dominik /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
   system.defaults = {
     NSGlobalDomain.AppleShowAllExtensions = true;

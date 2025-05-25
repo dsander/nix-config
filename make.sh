@@ -41,7 +41,7 @@ switch() {
   case "$TARGET_OS" in
     "macos")
       echo "Switching nix-darwin config ..."
-      ./result/sw/bin/darwin-rebuild switch --flake ".#${HOSTNAME}"
+      sudo ./result/sw/bin/darwin-rebuild switch --flake ".#${HOSTNAME}"
       ;;
     "nixos")
       echo "Switching NixOS config ..."
