@@ -154,38 +154,6 @@ in
   programs.jujutsu = {
     enable = true;
     package = unstablePkgs.jujutsu;
-    settings = builtins.fromTOML ''
-      [user]
-      email = "git@dsander.de"
-      name = "Dominik Sander"
-
-      [ui]
-      pager = ":builtin"
-
-      # From: https://github.com/rwjblue/dotfiles/blob/f2b836c58e6a63536700265e49a5b6749e4b3f93/packages/jj/config.toml
-      # NOTE: When using delta as the pager globally (e.g. for commands other than
-      # jj diff) forces the terminal output to be cleared when the pager is closed
-      # (because delta doesn't invoke less with -X option). This changes to only
-      # use delta for jj diff.
-      # See:
-      #  - https://github.com/jj-vcs/jj/blob/v0.25.0/docs/config.md#processing-contents-to-be-paged
-      #  - https://github.com/jj-vcs/jj/issues/4142
-      #  - https://github.com/jj-vcs/jj/discussions/4690
-      [[--scope]]
-      --when.commands = ["diff"]
-
-      [--scope.ui]
-      pager = "delta"
-      [--scope.ui.diff]
-      format = "git"
-
-      [aliases]
-      l = ["log", "-r", "active_bookmarks(1)"]
-
-      [revset-aliases]
-      'recent()' = 'committer_date(after:"3 months ago")'
-      'active_bookmarks(x)' = 'trunk() | ancestors(bookmarks(), x) | @'
-    '';
   };
 
 
@@ -244,6 +212,10 @@ in
     pgclirc = {
       source = ./config/pgclirc;
       target = ".pgclirc";
+    };
+    jjconfig = {
+      source = ./config/jj/config.toml;
+      target = ".config/jj/config.toml";
     };
     # npmrc = {
     #   text = ''
