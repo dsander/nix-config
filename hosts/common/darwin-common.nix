@@ -185,6 +185,7 @@ in
       "vlc"
       "raspberry-pi-imager"
       "zed"
+      "transnomino"
     ];
     masApps = {
       # "Bitwarden" = 1352778147;
