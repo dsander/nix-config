@@ -58,7 +58,7 @@
             source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
           fi
         '';
-        zshConfig = lib.mkOrder 1000 ''
+        zshConfig = lib.mkOrder 1000 (''
           setopt incappendhistory
           setopt promptsubst
 
@@ -91,7 +91,7 @@
           # makes color constants available
           autoload -U colors
           colors
-        '';
+        '' + (builtins.readFile ./config/zshrc));
         systemSpecific =
           lib.mkOrder 1001 (if pkgs.stdenv.isDarwin then
             ''
