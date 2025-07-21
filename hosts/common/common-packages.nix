@@ -77,6 +77,7 @@ with stablePkgs; [
   awscli
   go
   golangci-lint
+  git-filter-repo
 
   unstablePkgs.gg-jj
   unstablePkgs.jjui
