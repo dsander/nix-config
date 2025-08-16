@@ -162,7 +162,6 @@ in
       "nextcloud"
       "neovide"
       "numi"
-      "utm"
       # "osxfuse"
       "openscad"
       "orbstack"
@@ -179,13 +178,13 @@ in
       "teamviewer"
       "the-unarchiver"
       "thunderbird"
-      "vagrant"
       "viscosity"
       "visual-studio-code"
       "vlc"
       "raspberry-pi-imager"
       "zed"
       "transnomino"
+      "VirtualBuddy"
     ];
     masApps = {
       # "Bitwarden" = 1352778147;
