@@ -84,7 +84,7 @@ with stablePkgs; [
   unstablePkgs.jjui
   unstablePkgs.jj-fzf
   unstablePkgs.lazyjj
-
+  unstablePkgs.gemini-cli
   # requires nixpkgs.config.allowUnfree = true;
   # vscode-extensions.ms-vscode-remote.remote-ssh
 
