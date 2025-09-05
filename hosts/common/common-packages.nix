@@ -80,7 +80,7 @@ with stablePkgs; [
   git-filter-repo
   dive
 
-  unstablePkgs.gg-jj
+  # unstablePkgs.gg-jj
   unstablePkgs.jjui
   unstablePkgs.jj-fzf
   unstablePkgs.lazyjj
