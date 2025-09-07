@@ -54,6 +54,7 @@
       };
 
       customModules = [
+        ./modules/services/syncthing.nix
       ];
 
       # creates a nixos system config

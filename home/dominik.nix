@@ -14,7 +14,7 @@ in
     ./programs/zsh.nix
   ];
   home.stateVersion = "25.05";
-  disabledModules = [ ];
+  disabledModules = [ "${modulesPath}/services/syncthing.nix" ];
 
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
