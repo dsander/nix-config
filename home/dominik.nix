@@ -264,6 +264,11 @@ in
         user = "dominik";
         forwardAgent = true;
       };
+      "amarr" = {
+        hostname = "amarr.lan";
+        user = "dominik";
+        forwardAgent = true;
+      };
     };
   };
 
