@@ -125,13 +125,28 @@
             modules = [
               { _module.args = { inherit unstablePkgs stablePkgs; }; }
               ./home/${username}.nix
-              {
+              ({ config, lib, pkgs, ... }: {
                 home = {
                   username = username;
                   homeDirectory = homeDirectory;
                   packages = import ./hosts/common/common-packages.nix { inherit unstablePkgs stablePkgs; };
                 };
-              }
+
+                home.activation.make-zsh-default-shell = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+                  PATH="/usr/bin:/bin:$PATH"
+                  ZSH_PATH="/home/${username}/.nix-profile/bin/zsh"
+                  if [[ $(getent passwd ${username}) != *"$ZSH_PATH" ]]; then
+                    echo "Setting zsh as default shell (using chsh). Password might be necessary."
+                    if ! grep -q $ZSH_PATH /etc/shells; then
+                      echo "Adding zsh to /etc/shells"
+                      $DRY_RUN_CMD echo "$ZSH_PATH" | sudo tee -a /etc/shells
+                    fi
+                    echo "Running chsh to make zsh the default shell"
+                    $DRY_RUN_CMD chsh -s $ZSH_PATH ${username}
+                    echo "zsh is now set as default shell !"
+                  fi
+                '';
+              })
             ] ++ customModules;
           };
     in
