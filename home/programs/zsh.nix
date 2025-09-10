@@ -4,6 +4,10 @@
     lua
   ];
 
+  home.activation.createZinitCompletionsDir = ''
+    $DRY_RUN_CMD mkdir -p $HOME/.cache/zinit/completions
+  '';
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
