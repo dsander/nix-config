@@ -49,6 +49,7 @@ switch() {
       ;;
     "linux")
       echo "Applying home-manager config..."
+      export HOME_MANAGER_BACKUP_EXT="nix-hm-backup"
       ./result/activate
       ;;
   esac
