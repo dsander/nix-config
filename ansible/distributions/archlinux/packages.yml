@@ -1,0 +1,11 @@
+---
+arch_packages:
+  - 1password
+  - bitwarden
+  - discord
+  - firefox
+  - google-chrome
+  - mattermost-desktop
+  - aur/quickemu
+  - spotify
+  - thunderbird

@@ -1,0 +1,5 @@
+---
+# Ansible collections to install via ansible-galaxy
+collections:
+  - name: kewlfft.aur
+    version: "0.13.0"

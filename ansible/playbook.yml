@@ -1,0 +1,20 @@
+---
+- name: Local provisioning for this machine
+  hosts: localhost
+  connection: local
+  become: yes
+  gather_facts: yes
+
+  vars: {}
+
+  tasks:
+    - name: Determine distribution key from gathered facts
+      set_fact:
+        distribution: "{{ ansible_facts['distribution'] | default('unknown') | lower | replace(' ', '_') }}"
+
+    - name: Load distribution-specific package lists if present
+      include_vars:
+        file: "{{ playbook_dir }}/distributions/{{ distribution }}/packages.yml"
+
+    - name: Include distribution-specific tasks when present
+      include_tasks: "{{ playbook_dir }}/distributions/{{ distribution }}/main.yml"

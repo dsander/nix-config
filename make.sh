@@ -66,11 +66,26 @@ gc() {
     nix-store --gc
 }
 
+ansible() {
+  pushd ansible
+  ansible-playbook -i inventory.ini playbook.yml --ask-become-pass
+  popd
+}
+
+ansible_reqs() {
+  pushd ansible
+  ansible-galaxy install -r requirements.yml --roles-path vendor_roles
+  ansible-galaxy collection install -r requirements.yml
+  popd
+}
+
 case "$1" in
     "build") build;;
     "trace") trace;;
     "switch") switch;;
     "update") update;;
     "gc") gc;;
+    "ansible") ansible;;
+    "ansible_reqs") ansible_reqs;;
     *) switch;;
 esac

@@ -1,0 +1,7 @@
+---
+- name: Install AUR packages via kewlfft.aur (preferred)
+  kewlfft.aur.aur:
+    name: "{{ arch_packages }}"
+    state: present
+  when: arch_packages is defined and arch_packages | length > 0
+  become: false
