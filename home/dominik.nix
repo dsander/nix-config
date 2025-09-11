@@ -1,4 +1,4 @@
-{ unstablePkgs, stablePkgs, modulesPath, ... }:
+{ unstablePkgs, stablePkgs, modulesPath, lib, ... }:
 let
   darwinPathOverrides = [
     "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
@@ -195,7 +195,7 @@ in
   };
 
   home.file = {
-    # hammerspoon = lib.mkIf pkgs.stdenvNoCC.isDarwin {
+    # hammerspoon = lib.mkIf stablePkgs.stdenv.isDarwin {
     #   source = ./hammerspoon;
     #   target = ".hammerspoon";
     #   recursive = true;

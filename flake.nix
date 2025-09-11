@@ -27,6 +27,7 @@
     , ...
     }:
     let
+      inherit (inputs.nixpkgs) lib;
       overlays = [
         (final: prev: {
           rbw = prev.rbw.override { };
@@ -112,7 +113,7 @@
             ];
           };
 
-      linuxSystem = { system, hostName, username, homeDirectory ? "/home/${username}" }:
+      linuxSystem = { system, hostName, username, homeDirectory ? "/home/${username}", desktop ? false }:
         let
           stablePkgs = genPkgs system;
           unstablePkgs = genUnstablePkgs system;
@@ -125,6 +126,7 @@
             modules = [
               { _module.args = { inherit unstablePkgs stablePkgs; }; }
               ./home/${username}.nix
+            ] ++ (if desktop then [ ./home/desktop.nix ] else [ ]) ++ [
               ({ config, lib, pkgs, ... }: {
                 home = {
                   username = username;
@@ -164,6 +166,12 @@
         lima-ubuntu-lts = linuxSystem { system = "x86_64-linux"; hostName = "lima-ubuntu-lts"; username = "dominik"; homeDirectory = "/home/dominik.linux"; };
         workstation = linuxSystem { system = "x86_64-linux"; hostName = "workstation"; username = "dominik"; };
         dev-vm = linuxSystem { system = "x86_64-linux"; hostName = "dev-vm"; username = "dominik"; };
+        cachyos-x8664 = linuxSystem {
+          system = "x86_64-linux";
+          hostName = "cachyos-x8664";
+          username = "dominik";
+          desktop = true;
+        };
       };
     };
 }
