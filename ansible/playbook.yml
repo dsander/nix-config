@@ -2,12 +2,21 @@
 - name: Local provisioning for this machine
   hosts: localhost
   connection: local
-  become: yes
+  become: false
   gather_facts: yes
 
   vars: {}
 
   tasks:
+    - name: Stat authorized_keys
+      ansible.builtin.stat:
+        path: "{{ lookup('env','HOME') }}/.ssh/authorized_keys"
+      register: ssh_keys_stat
+
+    - name: Import SSH keys via tasks file when authorized_keys is missing
+      include_tasks: tasks/create_authorized_keys.yml
+      when: not ssh_keys_stat.stat.exists
+
     - name: Determine distribution key from gathered facts
       set_fact:
         distribution: "{{ ansible_facts['distribution'] | default('unknown') | lower | replace(' ', '_') }}"

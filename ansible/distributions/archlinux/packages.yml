@@ -6,6 +6,6 @@ arch_packages:
   - firefox
   - google-chrome
   - mattermost-desktop
-  - aur/quickemu
+  - quickemu-git
   - spotify
   - thunderbird

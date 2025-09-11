@@ -4,4 +4,3 @@
     name: "{{ arch_packages }}"
     state: present
   when: arch_packages is defined and arch_packages | length > 0
-  become: false
