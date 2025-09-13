@@ -20,6 +20,9 @@
     - name: Create Firefox profile 'dominik' if profiles.ini does not exist
       include_tasks: tasks/create_firefox_profile.yml
 
+    - name: Create Thunderbird profile
+      include_tasks: tasks/create_thunderbird_profile.yml
+
     - name: Create btrfs subvolumes for /nix and /var/lib/docker if on btrfs filesystem
       include_tasks: tasks/create_btrfs_subvolumes.yml
 

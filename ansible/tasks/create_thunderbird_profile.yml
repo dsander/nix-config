@@ -1,0 +1,36 @@
+---
+- name: Create Firefox profile 'dominik' if profiles.ini does not exist
+  vars:
+    thunderbird_profiles_root: "{{ ansible_env.HOME }}/.thunderbird"
+    profile_name: "dominik"
+    profile_path: "{{ thunderbird_profiles_root }}/{{ profile_name }}"
+    profiles_ini: "{{ thunderbird_profiles_root }}/profiles.ini"
+  block:
+    - name: Check if profiles.ini exists
+      stat:
+        path: "{{ profiles_ini }}"
+      register: profiles_ini_stat
+
+    - name: Create Thunderbird profile directory
+      file:
+        path: "{{ profile_path }}"
+        state: directory
+        mode: '0700'
+      when: not profiles_ini_stat.stat.exists
+
+    - name: Add entry to profiles.ini for new profile
+      blockinfile:
+        path: "{{ profiles_ini }}"
+        block: |
+          [General]
+          StartWithLastProfile=1
+          Version=2
+
+          [Profile0]
+          Name={{ profile_name }}
+          IsRelative=1
+          Path={{ profile_name }}
+          Default=1
+        create: yes
+        marker: ""
+      when: not profiles_ini_stat.stat.exists

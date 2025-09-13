@@ -25,7 +25,7 @@
         mode: '0700'
       when: not profiles_ini_stat.stat.exists
 
-    - name: Create empty userChrome.css in chrome directory
+    - name: Create userChrome.css in chrome directory
       copy:
         src: "{{ playbook_dir }}/data/firefox/userChrome.css"
         dest: "{{ profile_path }}/chrome/userChrome.css"
