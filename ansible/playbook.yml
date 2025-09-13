@@ -17,6 +17,12 @@
       include_tasks: tasks/create_authorized_keys.yml
       when: not ssh_keys_stat.stat.exists
 
+    - name: Create Firefox profile 'dominik' if profiles.ini does not exist
+      include_tasks: tasks/create_firefox_profile.yml
+
+    - name: Create btrfs subvolumes for /nix and /var/lib/docker if on btrfs filesystem
+      include_tasks: tasks/create_btrfs_subvolumes.yml
+
     - name: Determine distribution key from gathered facts
       set_fact:
         distribution: "{{ ansible_facts['distribution'] | default('unknown') | lower | replace(' ', '_') }}"
@@ -27,3 +33,17 @@
 
     - name: Include distribution-specific tasks when present
       include_tasks: "{{ playbook_dir }}/distributions/{{ distribution }}/main.yml"
+
+    - name: Ensure openssh server is enabled and started
+      ansible.builtin.systemd:
+        name: sshd
+        enabled: true
+        state: started
+      become: true
+
+    - name: Add user to libvirt group
+      ansible.builtin.user:
+        name: "{{ ansible_env.USER }}"
+        groups: libvirt
+        append: yes
+      become: true

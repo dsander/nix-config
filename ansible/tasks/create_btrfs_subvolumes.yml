@@ -1,0 +1,45 @@
+---
+- name: Check if root filesystem is btrfs
+  ansible.builtin.shell: |
+    df --output=fstype / | tail -1
+  register: root_fs_type
+  changed_when: false
+
+- name: Create btrfs subvolumes
+  vars:
+    btrfs_subvolume_paths:
+      - /nix
+      - /var/lib/docker
+      - /var/lib/libvirt
+  block:
+    - name: Ensure parent directories exist for all subvolume paths
+      ansible.builtin.file:
+        path: "{{ item | dirname }}"
+        state: directory
+        mode: '0755'
+      become: true
+      loop: "{{ btrfs_subvolume_paths }}"
+      when: (item | dirname) != "/"
+
+    - name: Check if paths are already btrfs subvolumes
+      ansible.builtin.shell: |
+        btrfs subvolume show "{{ item }}" 2>/dev/null | grep -q "{{ item }}"
+      register: subvolume_checks
+      changed_when: false
+      failed_when: false
+      loop: "{{ btrfs_subvolume_paths }}"
+      become: true
+
+    - name: Create btrfs subvolumes if they don't exist
+      ansible.builtin.shell: |
+        btrfs subvolume create "{{ item.item }}"
+      become: true
+      loop: "{{ subvolume_checks.results }}"
+      when: item.rc != 0
+
+  when: root_fs_type.stdout == "btrfs"
+
+- name: Display message when root filesystem is not btrfs
+  ansible.builtin.debug:
+    msg: "Root filesystem is {{ root_fs_type.stdout }}, not btrfs. Skipping subvolume creation."
+  when: root_fs_type.stdout != "btrfs"

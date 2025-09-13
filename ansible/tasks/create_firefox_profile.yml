@@ -1,0 +1,57 @@
+---
+- name: Create Firefox profile 'dominik' if profiles.ini does not exist
+  vars:
+    firefox_profiles_root: "{{ ansible_env.HOME }}/.mozilla/firefox"
+    profile_name: "dominik"
+    profile_path: "{{ firefox_profiles_root }}/{{ profile_name }}"
+    profiles_ini: "{{ firefox_profiles_root }}/profiles.ini"
+  block:
+    - name: Check if profiles.ini exists
+      stat:
+        path: "{{ profiles_ini }}"
+      register: profiles_ini_stat
+
+    - name: Create Firefox profile directory
+      file:
+        path: "{{ profile_path }}"
+        state: directory
+        mode: '0700'
+      when: not profiles_ini_stat.stat.exists
+
+    - name: Create chrome directory in profile folder
+      file:
+        path: "{{ profile_path }}/chrome"
+        state: directory
+        mode: '0700'
+      when: not profiles_ini_stat.stat.exists
+
+    - name: Create empty userChrome.css in chrome directory
+      copy:
+        src: "{{ playbook_dir }}/data/firefox/userChrome.css"
+        dest: "{{ profile_path }}/chrome/userChrome.css"
+        force: yes
+      when: not profiles_ini_stat.stat.exists
+
+    - name: Copy user.js from source file
+      copy:
+        src: "{{ playbook_dir }}/data/firefox/user.js"
+        dest: "{{ profile_path }}/user.js"
+        force: yes
+      when: not profiles_ini_stat.stat.exists
+
+    - name: Add entry to profiles.ini for new profile
+      blockinfile:
+        path: "{{ profiles_ini }}"
+        block: |
+          [General]
+          StartWithLastProfile=1
+          Version=2
+
+          [Profile0]
+          Name={{ profile_name }}
+          IsRelative=1
+          Path={{ profile_name }}
+          Default=1
+        create: yes
+        marker: ""
+      when: not profiles_ini_stat.stat.exists

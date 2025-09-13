@@ -5,7 +5,10 @@ arch_packages:
   - discord
   - firefox
   - google-chrome
+  - libvirt
   - mattermost-desktop
+  - openssh
   - quickemu-git
   - spotify
   - thunderbird
+  - virt-manager
