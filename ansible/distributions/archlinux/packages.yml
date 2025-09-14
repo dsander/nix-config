@@ -3,7 +3,12 @@ arch_packages:
   - 1password
   - bitwarden
   - discord
+  - docker
+  - docker-buildx
+  - docker-compose
   - firefox
+  - flatpak
+  - ghostty
   - google-chrome
   - libvirt
   - mattermost-desktop
@@ -12,3 +17,4 @@ arch_packages:
   - spotify
   - thunderbird
   - virt-manager
+  - rustup

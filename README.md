@@ -13,6 +13,44 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 make
 ```
 
+## Getting started on a Linux Desktop
+
+Create a btrfs subvole for nix if applicable:
+
+```
+sudo btrfs subvolume create /nix
+```
+
+Install nix
+```
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+
+# Depending on the shell
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+
+# Potentially modify the flake.nix and add the system
+make
+
+# Clear out the firefox profile (assuming we used it to download the repo)
+rm -rf ~/.mozilla/firefox/
+
+# Log out and back in to make nix work
+
+# Run ansible playbook
+make ansible_reqs
+make ansible
+
+# Start Firefox and select the default profile
+firefox -ProfileManager
+```
+
+Copy over things that are not synced:
+
+```
+rsync --delete -av ~/Library/Thunderbird/ 192.168.1.180:./.thunderbird/
+```
+
 ## Getting started on a new Mac
 
 Give full disk access to Terminal.

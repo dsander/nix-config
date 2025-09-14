@@ -1,0 +1,19 @@
+---
+- name: Check if ufw is installed
+  ansible.builtin.command: which ufw
+  register: ufw_path
+  ignore_errors: true
+
+- name: Check if ufw is enabled
+  ansible.builtin.command: ufw status
+  register: ufw_status
+  when: ufw_path.rc == 0
+  ignore_errors: true
+  become: true
+
+- name: Disable ufw if enabled
+  ansible.builtin.command: ufw disable
+  when:
+    - ufw_path.rc == 0
+    - "'Status: active' in ufw_status.stdout"
+  become: true
