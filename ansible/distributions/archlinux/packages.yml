@@ -14,7 +14,9 @@ arch_packages:
   - mattermost-desktop
   - openssh
   - quickemu-git
+  - rustup
   - spotify
   - thunderbird
   - virt-manager
-  - rustup
+  - visual-studio-code-bin
+  - zed
