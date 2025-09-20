@@ -10,6 +10,10 @@
       source = ./config/ghostty/config;
       target = ".config/ghostty/config";
     };
+    electron = {
+      source = ./config/electron-flags.conf;
+      target = ".config/electron-flags.conf";
+    };
   };
 
 }
