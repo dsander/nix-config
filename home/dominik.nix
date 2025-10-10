@@ -1,4 +1,4 @@
-{ unstablePkgs, stablePkgs, modulesPath, lib, ... }:
+{ unstablePkgs, stablePkgs, modulesPath, lib, config, ... }:
 let
   darwinPathOverrides = [
     "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
@@ -7,6 +7,7 @@ let
   pathOverrides = stablePkgs.lib.lists.optionals stablePkgs.stdenv.isDarwin darwinPathOverrides ++ [
     "$HOME/.cargo/bin"
     "$HOME/bin"
+    "$HOME/.npm/packages/bin"
   ];
 in
 {
@@ -217,12 +218,12 @@ in
       source = ./config/jj/config.toml;
       target = ".config/jj/config.toml";
     };
-    # npmrc = {
-    #   text = ''
-    #     prefix = ${config.home.sessionVariables.NODE_PATH};
-    #   '';
-    #   target = ".npmrc";
-    # };
+    npmrc = {
+      text = ''
+        prefix = ${config.home.homeDirectory}/.npm/packages
+      '';
+      target = ".npmrc";
+    };
   };
 
   programs.lazygit = {
@@ -282,5 +283,13 @@ in
   programs.zoxide = {
     enable = true;
   };
+
+  home.activation.install-gemini = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    export PATH=${stablePkgs.nodejs_22}/bin:$PATH
+    if ! ${stablePkgs.nodejs_22}/bin/npm list -g @google/gemini-cli >/dev/null 2>&1; then
+      echo "Installing @google/gemini-cli globally using npm"
+      ${stablePkgs.nodejs_22}/bin/npm install -g @google/gemini-cli
+    fi
+  '';
 }
 
