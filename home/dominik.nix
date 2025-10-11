@@ -284,7 +284,7 @@ in
     enable = true;
   };
 
-  home.activation.install-gemini = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.install-gemini = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     export PATH=${stablePkgs.nodejs_22}/bin:$PATH
     if ! ${stablePkgs.nodejs_22}/bin/npm list -g @google/gemini-cli >/dev/null 2>&1; then
       echo "Installing @google/gemini-cli globally using npm"
