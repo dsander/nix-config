@@ -26,7 +26,7 @@ in
     # TERM = "screen-256color";
     DEFAULT_USER = "dominik";
     BUNDLER_EDITOR = "nvim";
-    GIT_EDITOR = "nvim";
+    GIT_EDITOR = "hx";
     COMPOSE_MENU = "0";
   };
   home.sessionPath = pathOverrides;
@@ -270,6 +270,25 @@ in
         user = "dominik";
         forwardAgent = true;
       };
+    };
+  };
+
+  programs.helix = {
+    enable = true;
+    package = unstablePkgs.helix;
+    settings = {
+      theme = "dracula_at_night";
+    };
+    languages = {
+      language-server.codebook = {
+        command = "${unstablePkgs.codebook}/bin/codebook-lsp";
+        args = [ "serve" ];
+      };
+
+      language = [{
+        name = "git-commit";
+        language-servers = [ "codebook" ];
+      }];
     };
   };
 
