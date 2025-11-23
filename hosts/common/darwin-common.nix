@@ -82,7 +82,6 @@ in
       # "tailscale"
       "gnu-time"
       "libyaml"
-      "mactop"
       {
         name = "neovim";
         link = false; # Dependency of neovide, we want to use neovim from nix
@@ -91,6 +90,8 @@ in
         name = "tree-sitter";
         link = false; # Dependency of neovide, we want to use neovim from nix
       }
+    ] ++ lib.optionals (stablePkgs.system == "aarch64-darwin") [
+      "mactop"
     ];
     casks = [
       # #"alfred" # you are on alfred4 not 5
@@ -184,6 +185,7 @@ in
       "raspberry-pi-imager"
       "zed"
       "transnomino"
+    ] ++ lib.optionals (stablePkgs.system == "aarch64-darwin") [
       "VirtualBuddy"
     ];
     masApps = {
