@@ -64,7 +64,7 @@ with stablePkgs; [
   smartmontools
   unstablePkgs.terraform
   unstablePkgs.opentofu
-  unstablePkgs.opentofu-ls
+  unstablePkgs.tofu-ls
   tree
   unzip
   watch

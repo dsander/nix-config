@@ -161,7 +161,7 @@ in
       "macwhisper"
       "musicbrainz-picard"
       "nextcloud"
-      "neovide"
+      "neovide-app"
       "numi"
       # "osxfuse"
       "openscad"
