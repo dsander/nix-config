@@ -79,6 +79,7 @@ with stablePkgs; [
   golangci-lint
   git-filter-repo
   dive
+  shellcheck
 
   # unstablePkgs.gg-jj
   unstablePkgs.jjui
