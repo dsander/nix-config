@@ -25,11 +25,11 @@ with stablePkgs; [
   difftastic # Modern Unix `diff`
   dua # Modern Unix `du`
   duf # Modern Unix `df`
-  du-dust # Modern Unix `du`
+  dust # Modern Unix `du` # Modern Unix `du`
   # direnv # programs.direnv
   #docker
   drill
-  du-dust
+  dust # Modern Unix `du`
   dua
   duf
   entr # Modern Unix `watch`

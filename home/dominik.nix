@@ -14,8 +14,10 @@ in
   imports = [
     ./programs/zsh.nix
   ];
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
   disabledModules = [ "${modulesPath}/services/syncthing.nix" ];
+
+  targets.darwin.copyApps.enableChecks = false;
 
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
