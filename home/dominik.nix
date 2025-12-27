@@ -69,16 +69,19 @@ in
     ];
   };
 
+  programs.delta = {
+    enable = true;
+    options = { max-line-length = 2048; };
+  };
+
   programs.git = {
     enable = true;
-    delta = {
-      enable = true;
-      options = { max-line-length = 2048; };
-    };
     lfs.enable = true;
-    userEmail = "git@dsander.de";
-    userName = "Dominik Sander";
-    extraConfig = {
+    settings = {
+      user = {
+        email = "git@dsander.de";
+        name = "Dominik Sander";
+      };
       push.default = "simple";
       fetch.prune = true;
       merge.ff = "only";
@@ -114,26 +117,26 @@ in
           insteadOf = "https://gitlab.office.flavoursys.com/";
         };
       };
-    };
-    aliases = {
-      co = "checkout";
-      ec = "config --global -e";
-      up = "!git pull --rebase --prune $@ && git submodule update --init --recursive";
-      cob = "checkout -b";
-      cm = "!git add -A && git commit -m";
-      save = "!git add -A && git commit -m 'SAVEPOINT'";
-      wip = "!git add -u && git commit -m 'WIP'";
-      undo = "reset HEAD~1 --mixed";
-      amend = "commit -a --amend";
-      wipe = "!git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard";
-      bclean = "!f() { git branch --merged \${1-master} | grep -v \" \${1-master}$\" | xargs -r git branch -d; }; f";
-      bdone = "!f() { git checkout \${1-master} && git up && git bclean \${1-master}; }; f";
-      wdiff = "diff --color-words";
-      lola = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
-      dc = "diff --cached";
-      pushb = "!git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`";
-      branch-history = "for-each-ref --sort=committerdate refs/heads/ --format='%(color: yellow)%(committerdate:short) %(color: cyan)%(refname:short)  %(color: reset)%(subject)'";
-      du = "!git diff @{u}";
+      alias = {
+        co = "checkout";
+        ec = "config --global -e";
+        up = "!git pull --rebase --prune $@ && git submodule update --init --recursive";
+        cob = "checkout -b";
+        cm = "!git add -A && git commit -m";
+        save = "!git add -A && git commit -m 'SAVEPOINT'";
+        wip = "!git add -u && git commit -m 'WIP'";
+        undo = "reset HEAD~1 --mixed";
+        amend = "commit -a --amend";
+        wipe = "!git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard";
+        bclean = "!f() { git branch --merged \${1-master} | grep -v \" \${1-master}$\" | xargs -r git branch -d; }; f";
+        bdone = "!f() { git checkout \${1-master} && git up && git bclean \${1-master}; }; f";
+        wdiff = "diff --color-words";
+        lola = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
+        dc = "diff --cached";
+        pushb = "!git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`";
+        branch-history = "for-each-ref --sort=committerdate refs/heads/ --format='%(color: yellow)%(committerdate:short) %(color: cyan)%(refname:short)  %(color: reset)%(subject)'";
+        du = "!git diff @{u}";
+      };
     };
     ignores = [
       ".DS_Store"
@@ -257,13 +260,18 @@ in
 
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     extraConfig =
       if stablePkgs.stdenv.isDarwin then ''
         Include ~/.orbstack/ssh/config
       '' else '''';
-    serverAliveInterval = 10;
-    serverAliveCountMax = 3;
     matchBlocks = {
+      "*" = {
+        serverAliveInterval = 10;
+        serverAliveCountMax = 3;
+        forwardAgent = false;
+        addKeysToAgent = "yes";
+      };
       "dev-vm" = {
         hostname = "dev-vm.lan";
         user = "dominik";
