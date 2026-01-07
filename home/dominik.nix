@@ -71,7 +71,13 @@ in
 
   programs.delta = {
     enable = true;
-    options = { max-line-length = 2048; };
+    options = {
+      max-line-length = 2048;
+      syntax-theme = "Dracula";
+      plus-style = "syntax #003800";
+      minus-style = "syntax #3f0001";
+      navigate = true;
+    };
     enableGitIntegration = true;
   };
 
