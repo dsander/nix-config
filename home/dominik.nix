@@ -72,6 +72,7 @@ in
   programs.delta = {
     enable = true;
     options = { max-line-length = 2048; };
+    enableGitIntegration = true;
   };
 
   programs.git = {
