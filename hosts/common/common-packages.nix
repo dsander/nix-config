@@ -83,7 +83,7 @@ with stablePkgs; [
 
   # unstablePkgs.gg-jj
   unstablePkgs.jjui
-  unstablePkgs.jj-fzf
+  # unstablePkgs.jj-fzf
   unstablePkgs.lazyjj
   # requires nixpkgs.config.allowUnfree = true;
   # vscode-extensions.ms-vscode-remote.remote-ssh
