@@ -9,6 +9,7 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../../profiles/nixos/desktop-base.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -41,11 +42,6 @@
     };
   services.vscode-server.enable = true;
   services.tailscale.enable = true;
-
-  environment.systemPackages = import ./../../common/common-packages.nix
-    {
-      inherit stablePkgs unstablePkgs;
-    };
 
   virtualisation =
     {

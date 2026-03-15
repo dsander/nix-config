@@ -1,23 +1,11 @@
 { unstablePkgs, stablePkgs, modulesPath, lib, config, ... }:
-let
-  darwinPathOverrides = [
-    "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-    "/Applications/Postgres.app/Contents/Versions/latest/bin"
-  ];
-  pathOverrides = stablePkgs.lib.lists.optionals stablePkgs.stdenv.isDarwin darwinPathOverrides ++ [
-    "$HOME/.cargo/bin"
-    "$HOME/bin"
-    "$HOME/.npm/packages/bin"
-  ];
-in
 {
   imports = [
+    ./platforms/darwin.nix
     ./programs/zsh.nix
   ];
   home.stateVersion = "25.11";
   disabledModules = [ "${modulesPath}/services/syncthing.nix" ];
-
-  targets.darwin.copyApps.enableChecks = false;
 
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
@@ -31,7 +19,11 @@ in
     GIT_EDITOR = "nvim";
     COMPOSE_MENU = "0";
   };
-  home.sessionPath = pathOverrides;
+  home.sessionPath = [
+    "$HOME/.cargo/bin"
+    "$HOME/bin"
+    "$HOME/.npm/packages/bin"
+  ];
 
   programs.direnv = {
     enable = true;
@@ -256,22 +248,15 @@ in
     };
   };
 
-  services.syncthing =
-    if stablePkgs.stdenv.isDarwin then
-      { enable = false; }
-    else {
-      enable = true;
-      tray.enable = true;
-      package = unstablePkgs.syncthing;
-    };
+  services.syncthing = {
+    enable = true;
+    tray.enable = true;
+    package = unstablePkgs.syncthing;
+  };
 
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    extraConfig =
-      if stablePkgs.stdenv.isDarwin then ''
-        Include ~/.orbstack/ssh/config
-      '' else '''';
     matchBlocks = {
       "*" = {
         serverAliveInterval = 10;
@@ -330,4 +315,3 @@ in
     fi
   '';
 }
-

@@ -58,120 +58,168 @@
         ./modules/services/syncthing.nix
       ];
 
-      # creates a nixos system config
-      nixosSystem = system: hostName: username:
-        let
-          stablePkgs = genPkgs system;
-          unstablePkgs = genUnstablePkgs system;
-        in
-        nixpkgs.lib.nixosSystem
-          {
-            inherit system;
-            modules = [
-              # adds unstable to be available in top-level evals (like in common-packages)
-              { _module.args = { inherit unstablePkgs stablePkgs; }; }
-
-              ./hosts/common/base.nix
-              ./hosts/nixos/${hostName} # ip address, host specific stuff
-              vscode-server.nixosModules.default
-              home-manager.nixosModules.home-manager
-              {
-                networking.hostName = hostName;
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.users.${username} = { imports = [ ./home/${username}.nix ]; };
-                home-manager.extraSpecialArgs = { inherit unstablePkgs stablePkgs; };
-              }
-              ./hosts/common/nixos-common.nix
-            ] ++ customModules;
-          };
-
-      # creates a macos system config
-      darwinSystem = system: hostName: username:
-        let
-          unstablePkgs = genUnstablePkgs system;
-          stablePkgs = genDarwinPkgs system;
-        in
-        nix-darwin.lib.darwinSystem
-          {
-            inherit system inputs;
-            modules = [
-              # adds unstable to be available in top-level evals (like in common-packages)
-              { _module.args = { inherit unstablePkgs stablePkgs; }; }
-
-              ./hosts/common/base.nix
-              ./hosts/darwin/${hostName} # ip address, host specific stuff
-              home-manager.darwinModules.home-manager
-              {
-                networking.hostName = hostName;
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.users.${username} = { imports = [ ./home/${username}.nix ] ++ customModules; };
-                home-manager.extraSpecialArgs = { inherit unstablePkgs stablePkgs; };
-              }
-              ./hosts/common/darwin-common.nix
-            ];
-          };
-
-      linuxSystem = { system, hostName, username, homeDirectory ? "/home/${username}", desktop ? false }:
-        let
-          stablePkgs = genPkgs system;
-          unstablePkgs = genUnstablePkgs system;
-        in
-
-        home-manager.lib.homeManagerConfiguration
-          {
-            pkgs = stablePkgs;
-
-            modules = [
-              { _module.args = { inherit unstablePkgs stablePkgs; }; }
-              ./home/${username}.nix
-            ] ++ (if desktop then [ ./home/desktop.nix ] else [ ]) ++ [
-              ({ config, lib, pkgs, ... }: {
-                home = {
-                  username = username;
-                  homeDirectory = homeDirectory;
-                  packages = import ./hosts/common/common-packages.nix { inherit unstablePkgs stablePkgs; };
-                };
-
-                home.activation.make-zsh-default-shell = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-                  PATH="/usr/bin:/bin:$PATH"
-                  ZSH_PATH="/home/${username}/.nix-profile/bin/zsh"
-                  if [[ $(getent passwd ${username}) != *"$ZSH_PATH" ]]; then
-                    echo "Setting zsh as default shell (using chsh). Password might be necessary."
-                    if ! grep -q $ZSH_PATH /etc/shells; then
-                      echo "Adding zsh to /etc/shells"
-                      $DRY_RUN_CMD echo "$ZSH_PATH" | sudo tee -a /etc/shells
-                    fi
-                    echo "Running chsh to make zsh the default shell"
-                    $DRY_RUN_CMD chsh -s $ZSH_PATH ${username}
-                    echo "zsh is now set as default shell !"
-                  fi
-                '';
-              })
-            ] ++ customModules;
-          };
-    in
-    {
-      darwinConfigurations = {
-        osprey = darwinSystem "x86_64-darwin" "osprey" "dominik";
-        thorax = darwinSystem "aarch64-darwin" "thorax" "dominik";
-      };
-
-      nixosConfigurations = {
-        testnix = nixosSystem "x86_64-linux" "testnix" "dominik";
-      };
-
-      homeManagerConfigurations = {
-        lima-ubuntu-lts = linuxSystem { system = "x86_64-linux"; hostName = "lima-ubuntu-lts"; username = "dominik"; homeDirectory = "/home/dominik.linux"; };
-        workstation = linuxSystem { system = "x86_64-linux"; hostName = "workstation"; username = "dominik"; };
-        dev-vm = linuxSystem { system = "x86_64-linux"; hostName = "dev-vm"; username = "dominik"; };
-        cachyos-x8664 = linuxSystem {
+      hostSpecs = {
+        osprey = {
+          kind = "darwin";
+          system = "x86_64-darwin";
+          username = "dominik";
+        };
+        thorax = {
+          kind = "darwin";
+          system = "aarch64-darwin";
+          username = "dominik";
+        };
+        testnix = {
+          kind = "nixos";
           system = "x86_64-linux";
-          hostName = "cachyos-x8664";
+          username = "dominik";
+        };
+        lima-ubuntu-lts = {
+          kind = "linux-home";
+          system = "x86_64-linux";
+          username = "dominik";
+          homeDirectory = "/home/dominik.linux";
+        };
+        workstation = {
+          kind = "linux-home";
+          system = "x86_64-linux";
+          username = "dominik";
+        };
+        dev-vm = {
+          kind = "linux-home";
+          system = "x86_64-linux";
+          username = "dominik";
+        };
+        cachyos-x8664 = {
+          kind = "linux-home";
+          system = "x86_64-linux";
           username = "dominik";
           desktop = true;
         };
       };
+
+      selectHostSpecs = kind: lib.filterAttrs (_: spec: spec.kind == kind) hostSpecs;
+
+      hostImports = {
+        cli = [ ./home/profiles/cli.nix ];
+        guiBase = [ ./home/profiles/gui-base.nix ];
+      };
+
+      homeImportsFor = { desktop ? false }:
+        hostImports.cli
+        ++ lib.optionals desktop hostImports.guiBase
+        ++ customModules;
+
+      mkPkgsFor = { kind, system }:
+        let
+          stablePkgs = if kind == "darwin" then genDarwinPkgs system else genPkgs system;
+        in
+        {
+          inherit stablePkgs;
+          unstablePkgs = genUnstablePkgs system;
+        };
+
+      mkHomeManagerModule =
+        { username
+        , stablePkgs
+        , unstablePkgs
+        , homeImports ? hostImports.cli ++ customModules
+        }:
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.${username} = { imports = homeImports; };
+          home-manager.extraSpecialArgs = { inherit unstablePkgs stablePkgs; };
+        };
+
+      mkManagedSystem = { kind, system, hostName, username }:
+        let
+          inherit (mkPkgsFor { inherit kind system; }) stablePkgs unstablePkgs;
+          systemBuilder = if kind == "darwin" then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
+          homeManagerModule =
+            if kind == "darwin" then home-manager.darwinModules.home-manager else home-manager.nixosModules.home-manager;
+          hostModule = if kind == "darwin" then ./hosts/darwin/${hostName} else ./hosts/nixos/${hostName};
+          commonModule =
+            if kind == "darwin" then ./hosts/common/darwin-common.nix else ./hosts/common/nixos-common.nix;
+        in
+        systemBuilder (
+          {
+            inherit system;
+            modules = [
+              { _module.args = { inherit unstablePkgs stablePkgs; }; }
+              ./hosts/common/base.nix
+              hostModule
+            ]
+            ++ lib.optionals (kind == "nixos") [ vscode-server.nixosModules.default ]
+            ++ [
+              homeManagerModule
+              ({ networking.hostName = hostName; } // mkHomeManagerModule {
+                inherit username stablePkgs unstablePkgs;
+              })
+              commonModule
+            ];
+          }
+          // lib.optionalAttrs (kind == "darwin") { inherit inputs; }
+        );
+
+      mkLinuxHome = { kind, system, hostName, username, homeDirectory ? "/home/${username}", desktop ? false }:
+        let
+          inherit (mkPkgsFor { inherit kind system; }) stablePkgs unstablePkgs;
+        in
+        home-manager.lib.homeManagerConfiguration
+          {
+            pkgs = stablePkgs;
+            modules = [
+              { _module.args = { inherit unstablePkgs stablePkgs; }; }
+            ]
+            ++ homeImportsFor { inherit desktop; }
+            ++ [
+              ({ config, lib, pkgs, ... }:
+                let
+                  packageGroups = import ./packages { inherit stablePkgs unstablePkgs lib; };
+                in
+                {
+                  home = {
+                    username = username;
+                    homeDirectory = homeDirectory;
+                    packages = packageGroups.development;
+                  };
+
+                  home.activation.make-zsh-default-shell = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+                    PATH="/usr/bin:/bin:$PATH"
+                    ZSH_PATH="/home/${username}/.nix-profile/bin/zsh"
+                    if [[ $(getent passwd ${username}) != *"$ZSH_PATH" ]]; then
+                      echo "Setting zsh as default shell (using chsh). Password might be necessary."
+                      if ! grep -q $ZSH_PATH /etc/shells; then
+                        echo "Adding zsh to /etc/shells"
+                        $DRY_RUN_CMD echo "$ZSH_PATH" | sudo tee -a /etc/shells
+                      fi
+                      echo "Running chsh to make zsh the default shell"
+                      $DRY_RUN_CMD chsh -s $ZSH_PATH ${username}
+                      echo "zsh is now set as default shell !"
+                    fi
+                  '';
+                })
+            ];
+          };
+    in
+    {
+      darwinConfigurations = lib.mapAttrs
+        (
+          hostName: spec: mkManagedSystem ({ inherit hostName; } // spec)
+        )
+        (selectHostSpecs "darwin");
+
+      nixosConfigurations = lib.mapAttrs
+        (
+          hostName: spec: mkManagedSystem ({ inherit hostName; } // spec)
+        )
+        (selectHostSpecs "nixos");
+
+      homeManagerConfigurations = lib.mapAttrs
+        (
+          hostName: spec: mkLinuxHome ({ inherit hostName; } // spec)
+        )
+        (selectHostSpecs "linux-home");
     };
 }

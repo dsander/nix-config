@@ -91,7 +91,7 @@ Suggested shape:
 - `profiles/nixos/dev-vm.nix`
 - `profiles/nixos/desktop-plasma.nix`
 - `profiles/nixos/desktop-niri.nix`
-- `profiles/darwin/workstation.nix`
+- `profiles/darwin/default.nix`
 
 Hosts should become mostly hardware, networking, secrets, and profile imports.
 
@@ -189,4 +189,3 @@ Most importantly the outcome for all currently configured systems should stay th
 5. Refactor host definitions to import profiles instead of duplicating package setup.
 6. Simplify `flake.nix` around host metadata and system builders.
 7. Add explicit build/check/apply commands for local and cross-target workflows.
-

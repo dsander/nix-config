@@ -1,5 +1,53 @@
 # nix-macos-testing
 
+## Structure
+
+- `flake.nix`: host and target wiring
+- `hosts/`: full system hosts managed by nix-darwin or NixOS
+- `profiles/`: reusable system-level profiles
+- `packages/groups/`: layered package groups such as `core`, `development`, `desktop-base`, and `darwin-base`
+- `home/profiles/`: shared home-manager profiles
+- `home/platforms/`: platform-specific home-manager adjustments
+
+Current host kinds:
+
+- `darwin`: full macOS systems managed through nix-darwin
+- `nixos`: full NixOS systems
+- `linux-home`: standalone Linux home-manager targets for non-NixOS machines
+
+## Commands
+
+Local apply still works as before:
+
+```bash
+make
+make switch
+make apply
+```
+
+Targeted checks and builds:
+
+```bash
+make check TARGET=workstation
+make build TARGET=workstation
+make check TARGET=testnix
+make build TARGET=thorax
+make check_all
+```
+
+Cleanup:
+
+```bash
+make clean
+make gc
+```
+
+Notes:
+
+- `make check TARGET=...` runs evaluation plus `nix build --dry-run`
+- `make build TARGET=...` performs a real build of that flake output
+- building Linux targets from macOS may require a Linux builder, but `make check TARGET=...` should still work locally
+
 
 ## Testing flake on a ubuntu VM
 
