@@ -4,7 +4,7 @@ lib.unique (
   (import ./core.nix { inherit stablePkgs unstablePkgs lib; })
   ++
   (with stablePkgs; [
-    unstablePkgs.yt-dlp
+    yt-dlp
     unstablePkgs.act
     unstablePkgs.rbw
     unstablePkgs._1password-cli
