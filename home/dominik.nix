@@ -193,6 +193,11 @@
       # This should be more efficient, lets try to learn it
       enter_accept = true;
       filter_mode_shell_up_key_binding = "session";
+      search_mode = "daemon-fuzzy";
+      daemon = {
+        enabled = true;
+        autostart = true;
+      };
       sync = {
         records = true;
       };
