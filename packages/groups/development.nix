@@ -35,7 +35,7 @@ lib.unique (
     sshfs
     clang-tools
     s3cmd
-    awscli
+    awscli2
     go
     golangci-lint
     git-filter-repo
