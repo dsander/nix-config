@@ -27,6 +27,10 @@
 
   programs.direnv = {
     enable = true;
+    package = stablePkgs.direnv.overrideAttrs (_: {
+      # TODO: remove once https://github.com/NixOS/nixpkgs/issues/507531 is fixed.
+      doCheck = false;
+    });
     nix-direnv.enable = true;
   };
 

@@ -45,7 +45,7 @@ in
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.overlays = [
-    (final: prev: lib.optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
+    (final: prev: lib.optionalAttrs (prev.stdenv.hostPlatform.system == "aarch64-darwin") {
       # Add access to x86 packages system is running Apple Silicon
       pkgs-x86 = import nixpkgs {
         system = "x86_64-darwin";
@@ -85,7 +85,7 @@ in
         name = "tree-sitter";
         link = false; # Dependency of neovide, we want to use neovim from nix
       }
-    ] ++ lib.optionals (stablePkgs.system == "aarch64-darwin") [
+    ] ++ lib.optionals (stablePkgs.stdenv.hostPlatform.system == "aarch64-darwin") [
       "mactop"
     ];
     casks = [
@@ -180,7 +180,7 @@ in
       "raspberry-pi-imager"
       "zed"
       "transnomino"
-    ] ++ lib.optionals (stablePkgs.system == "aarch64-darwin") [
+    ] ++ lib.optionals (stablePkgs.stdenv.hostPlatform.system == "aarch64-darwin") [
       "VirtualBuddy"
     ];
     masApps = {
