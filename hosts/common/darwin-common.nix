@@ -1,4 +1,4 @@
-{ lib, inputs, stablePkgs, unstablePkgs, ... }:
+{ lib, inputs, stablePkgs, unstablePkgs, config, ... }:
 let
   inherit (inputs) nixpkgs nixpkgs-stable;
 in
@@ -66,6 +66,7 @@ in
   homebrew = {
     enable = true;
     onActivation.upgrade = true;
+    onActivation.extraEnv.PATH = "${stablePkgs.mas}/bin:${config.homebrew.prefix}/bin:/usr/bin:/bin:/usr/sbin:/sbin";
     # updates homebrew packages on activation,
     # can make darwin-rebuild much slower (otherwise i'd forget to do it ever though)
     taps = [
