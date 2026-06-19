@@ -194,7 +194,10 @@ update() {
 
 gc() {
     echo "Garbage collecting..."
-    nix-env --delete-generations 5d
+    if [ "$TARGET_OS" = "macos" ] || [ "$TARGET_OS" = "nixos" ]; then
+        sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +10
+    fi
+    nix-env --delete-generations +10
     nix-store --gc
 }
 
