@@ -164,7 +164,7 @@ in
       "plex"
       "plexamp"
       "phantomjs"
-      "postgres-unofficial"
+      "postgres-app"
       # "skype"
       "raycast"
       "slack"

@@ -28,7 +28,7 @@ lib.unique (
     unstablePkgs.git-absorb
     gnused
     just
-    neofetch
+    fastfetch
     unstablePkgs.terraform
     unstablePkgs.opentofu
     unstablePkgs.tofu-ls

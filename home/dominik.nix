@@ -266,22 +266,22 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "*" = {
-        serverAliveInterval = 10;
-        serverAliveCountMax = 3;
-        forwardAgent = false;
-        addKeysToAgent = "yes";
+        ServerAliveInterval = 10;
+        ServerAliveCountMax = 3;
+        ForwardAgent = false;
+        AddKeysToAgent = "yes";
       };
       "dev-vm" = {
-        hostname = "dev-vm.lan";
-        user = "dominik";
-        forwardAgent = true;
+        HostName = "dev-vm.lan";
+        User = "dominik";
+        ForwardAgent = true;
       };
       "amarr" = {
-        hostname = "amarr.lan";
-        user = "dominik";
-        forwardAgent = true;
+        HostName = "amarr.lan";
+        User = "dominik";
+        ForwardAgent = true;
       };
     };
   };
