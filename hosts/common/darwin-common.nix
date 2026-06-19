@@ -169,6 +169,7 @@ in
       # "skype"
       "raycast"
       "slack"
+      "stats"
       "sublime-text"
       # "spotify"
       "teamspeak-client"
@@ -181,59 +182,31 @@ in
       "raspberry-pi-imager"
       "zed"
       "transnomino"
+      "utm"
     ] ++ lib.optionals (stablePkgs.stdenv.hostPlatform.system == "aarch64-darwin") [
       "VirtualBuddy"
     ];
     masApps = {
-      # "Bitwarden" = 1352778147;
-      # "Creator's Best Friend" = 1524172135;
-      # "Disk Speed Test" = 425264550;
-      # "iA Writer" = 775737590;
-      # "Microsoft Remote Desktop" = 1295203466;
-      # "Reeder" = 1529448980;
-      # "Resize Master" = 1025306797;
-      # # "Steam Link" = 123;
-      # "Tailscale" = 1475387142;
-      # "Telegram" = 747648890;
-      # "The Unarchiver" = 425424353;
-      # "Todoist" = 585829637;
-      # "UTM" = 1538878817;
-      # "Wireguard" = 1451685025;
-
-      # these apps with uk apple id
-      #"Final Cut Pro" = 424389933;
-      #"Logic Pro" = 634148309;
-      #"MainStage" = 634159523;
-      #"Garageband" = 682658836;
-      #"ShutterCount" = 720123827;
-      #"Teleprompter" = 1533078079;
-
       "Amphetamine" = 937984704;
-      "Mona" = 1659154653;
+      "Better Battery 2" = 1455789676;
+      "DaisyDisk" = 411643860;
       "Discovery" = 1381004916;
       "Disk Speed Test" = 425264550;
-      "Helium" = 1054607607;
-      "Mattermost" = 1614666244;
-      "MQTT Explorer" = 1455214828;
-      "Telegram" = 747648890;
-      "Duplicate File Finder" = 1032755628;
-      "Twitter" = 1482454543;
-      "WireGuard" = 1451685025;
-      "iStat Menus" = 1319778037;
       "ForkLift" = 412448059;
-      "DaisyDisk" = 411643860;
       "Infuse" = 1136220934;
-      "Better Battery 2" = 1455789676;
-      "Microsoft Remote Desktop" = 1295203466;
-      "MediaInfo" = 510620098;
-      "Tailscale" = 1475387142;
-      "Outbank" = 1094255754;
-      "TestFlight" = 899247664;
-
+      "Ivory" = 6444602274;
       "Keynote" = 409183694;
+      "Mattermost" = 1614666244;
+      "MediaInfo" = 510620098;
+      "MQTT Explorer" = 1455214828;
       "Numbers" = 409203825;
+      "Outbank" = 1094255754;
       "Pages" = 409201541;
-
+      "Tailscale" = 1475387142;
+      "Telegram" = 747648890;
+      "TestFlight" = 899247664;
+      "Windows App" = 1295203466;
+      "WireGuard" = 1451685025;
     };
   };
 
