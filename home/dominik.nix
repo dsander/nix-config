@@ -23,6 +23,7 @@
     "$HOME/.cargo/bin"
     "$HOME/bin"
     "$HOME/.npm/packages/bin"
+    "$HOME/.local/bin"
   ];
 
   programs.direnv = {
