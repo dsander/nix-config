@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-26.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
 
@@ -31,8 +31,6 @@
       overlays = [
         (final: prev: {
           rbw = prev.rbw.override { };
-          nodejs = prev.nodejs_22;
-          nodejs-slim = prev.nodejs-slim_22;
         })
       ];
 

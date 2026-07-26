@@ -174,7 +174,7 @@
     vimdiffAlias = true;
 
     # nvim plugin providers
-    # withNodeJs = true;
+    withNodeJs = true;
     withRuby = true;
     withPython3 = true;
     extraConfig = ''
@@ -318,10 +318,10 @@
   };
 
   home.activation.install-gemini = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    export PATH=${stablePkgs.nodejs_22}/bin:$PATH
-    if ! ${stablePkgs.nodejs_22}/bin/npm list -g @google/gemini-cli >/dev/null 2>&1; then
+    export PATH=${stablePkgs.nodejs}/bin:$PATH
+    if ! ${stablePkgs.nodejs}/bin/npm list -g @google/gemini-cli >/dev/null 2>&1; then
       echo "Installing @google/gemini-cli globally using npm"
-      ${stablePkgs.nodejs_22}/bin/npm install -g @google/gemini-cli
+      ${stablePkgs.nodejs}/bin/npm install -g @google/gemini-cli
     fi
   '';
 }

@@ -10,9 +10,8 @@ lib.unique (
     unstablePkgs._1password-cli
     unstablePkgs.rclone
     unstablePkgs.lazydocker
-    unstablePkgs.pinentry-gtk2
 
-    nodejs_22
+    nodejs
     nixpkgs-fmt
     nil
     ansible
