@@ -80,6 +80,7 @@
         };
         workstation = {
           kind = "linux-home";
+          platform = "wsl";
           system = "x86_64-linux";
           username = "dominik";
         };
@@ -103,9 +104,10 @@
         guiBase = [ ./home/profiles/gui-base.nix ];
       };
 
-      homeImportsFor = { desktop ? false }:
+      homeImportsFor = { desktop ? false, platform ? "linux" }:
         hostImports.cli
         ++ lib.optionals desktop hostImports.guiBase
+        ++ lib.optionals (platform == "wsl") [ ./home/platforms/wsl.nix ]
         ++ customModules;
 
       mkPkgsFor = { kind, system }:
@@ -160,7 +162,15 @@
           // lib.optionalAttrs (kind == "darwin") { inherit inputs; }
         );
 
-      mkLinuxHome = { kind, system, hostName, username, homeDirectory ? "/home/${username}", desktop ? false }:
+      mkLinuxHome =
+        { kind
+        , system
+        , hostName
+        , username
+        , homeDirectory ? "/home/${username}"
+        , desktop ? false
+        , platform ? "linux"
+        }:
         let
           inherit (mkPkgsFor { inherit kind system; }) stablePkgs unstablePkgs;
         in
@@ -170,7 +180,7 @@
             modules = [
               { _module.args = { inherit unstablePkgs stablePkgs; }; }
             ]
-            ++ homeImportsFor { inherit desktop; }
+            ++ homeImportsFor { inherit desktop platform; }
             ++ [
               ({ config, lib, pkgs, ... }:
                 let
