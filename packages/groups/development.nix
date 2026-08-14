@@ -42,5 +42,6 @@ lib.unique (
     shellcheck
     unstablePkgs.jjui
     unstablePkgs.lazyjj
+    pinentry-curses
   ])
 )
