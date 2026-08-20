@@ -59,6 +59,8 @@ in
   system.keyboard.remapCapsLockToEscape = true;
 
   # Add ability to used TouchID for sudo authentication
+  # reattach fixes TouchID not working inside tmux/screen
+  security.pam.services.sudo_local.reattach = true;
   security.pam.services.sudo_local.touchIdAuth = true;
 
   system.primaryUser = "dominik";
