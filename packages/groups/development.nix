@@ -10,6 +10,8 @@ lib.unique (
     unstablePkgs._1password-cli
     unstablePkgs.rclone
     unstablePkgs.lazydocker
+    unstablePkgs.mcp-grafana
+    unstablePkgs.herdr
 
     nodejs
     nixpkgs-fmt
