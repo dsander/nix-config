@@ -67,10 +67,9 @@
           setopt promptsubst
 
           # handy keybindings
-          bindkey "^s" beginning-of-line
           bindkey "^e" end-of-line
-          bindkey "^f" forward-char
-          bindkey "^b" backward-char
+          bindkey "^f" end-of-line
+          bindkey "^b" beginning-of-line
           bindkey "^k" kill-line
           bindkey "^d" delete-char
           bindkey "^p" history-search-backward
