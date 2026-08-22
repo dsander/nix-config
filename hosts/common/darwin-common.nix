@@ -152,6 +152,7 @@ in
       #"font-sourcecodepro-nerd-font"
       #"font-sourcecodepro-nerd-font-mono"
       "firefox"
+      "ghostty"
       "google-chrome"
       # "google-chrome-canary"
       "keyboardcleantool"

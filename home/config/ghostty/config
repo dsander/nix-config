@@ -67,3 +67,7 @@ cursor-color = #708CA9
 cursor-text = #708CA9
 selection-background = #414D58
 selection-foreground = #F8F8F2
+
+# Cmd/Super+Left/Right cycles tabs, same as iTerm.
+keybind = super+arrow_left=previous_tab
+keybind = super+arrow_right=next_tab
