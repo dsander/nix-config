@@ -238,6 +238,10 @@
       '';
       target = ".npmrc";
     };
+    herdrConfig = {
+      source = ./config/herdr/config.toml;
+      target = ".config/herdr/config.toml";
+    };
   };
 
   programs.lazygit = {
