@@ -12,6 +12,7 @@
     enable = true;
     autosuggestion.enable = true;
     enableCompletion = true;
+    defaultKeymap = "emacs";
     # zprof.enable = true;
     history = {
       extended = true;
