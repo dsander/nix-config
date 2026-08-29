@@ -1,4 +1,11 @@
 { unstablePkgs, stablePkgs, modulesPath, lib, config, ... }:
+let
+  # pi packages (extensions, skills, prompts, themes) installed into
+  # ~/.pi/agent/settings.json by the install-pi-coding-agent activation script.
+  piPackages = [
+    "npm:@gotgenes/pi-anthropic-auth"
+  ];
+in
 {
   imports = [
     ./platforms/darwin.nix
@@ -326,6 +333,29 @@
     if ! ${stablePkgs.nodejs}/bin/npm list -g @google/gemini-cli >/dev/null 2>&1; then
       echo "Installing @google/gemini-cli globally using npm"
       ${stablePkgs.nodejs}/bin/npm install -g @google/gemini-cli
+    fi
+  '';
+
+  home.activation.install-pi-coding-agent = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    export PATH=${stablePkgs.nodejs}/bin:$PATH
+    export PI_SKIP_VERSION_CHECK=1
+    if ! ${stablePkgs.nodejs}/bin/npm list -g @earendil-works/pi-coding-agent >/dev/null 2>&1; then
+      echo "Installing @earendil-works/pi-coding-agent globally using npm"
+      ${stablePkgs.nodejs}/bin/npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+    fi
+
+    # pi keeps its own mutable state in ~/.pi/agent/settings.json (theme, default
+    # model, ...), so packages are installed through the CLI instead of managing
+    # that file declaratively.
+    pi=${config.home.homeDirectory}/.npm/packages/bin/pi
+    if [ -x "$pi" ]; then
+      installed=$("$pi" list 2>/dev/null || true)
+      for piPackage in ${lib.escapeShellArgs piPackages}; do
+        if ! printf '%s' "$installed" | grep -qF "$piPackage"; then
+          echo "Installing pi package $piPackage"
+          "$pi" install "$piPackage"
+        fi
+      done
     fi
   '';
 }
