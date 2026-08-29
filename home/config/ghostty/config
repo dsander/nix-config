@@ -71,3 +71,5 @@ selection-foreground = #F8F8F2
 # Cmd/Super+Left/Right cycles tabs, same as iTerm.
 keybind = super+arrow_left=previous_tab
 keybind = super+arrow_right=next_tab
+
+shell-integration-features = ssh-env,ssh-terminfo
