@@ -6,6 +6,8 @@
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
+    hunk.url = "github:modem-dev/hunk/v0.20.1";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +26,7 @@
     , home-manager
     , nix-darwin
     , vscode-server
+    , hunk
     , ...
     }:
     let
@@ -31,6 +34,9 @@
       overlays = [
         (final: prev: {
           rbw = prev.rbw.override { };
+        })
+        (final: prev: {
+          hunk = hunk.packages.${final.system}.default;
         })
       ];
 
