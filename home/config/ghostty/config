@@ -72,4 +72,5 @@ selection-foreground = #F8F8F2
 keybind = super+arrow_left=previous_tab
 keybind = super+arrow_right=next_tab
 
-shell-integration-features = ssh-env,ssh-terminfo
+shell-integration-features = ssh-env,ssh-terminfo,no-cursor
+cursor-style = block
