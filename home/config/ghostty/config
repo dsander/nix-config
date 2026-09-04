@@ -72,5 +72,8 @@ selection-foreground = #F8F8F2
 keybind = super+arrow_left=previous_tab
 keybind = super+arrow_right=next_tab
 
-shell-integration-features = ssh-env,ssh-terminfo,no-cursor
+# xterm-ghotty is known almost nowhere, the shell integration features do not help, use an older supported term
+term = xterm-256color
+
+shell-integration-features = no-cursor
 cursor-style = block

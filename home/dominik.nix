@@ -193,6 +193,8 @@ in
 
   programs.tmux = {
     enable = true;
+    # $TERM INSIDE tmux (also what ssh sends to remote hosts).
+    terminal = "tmux-256color";
     extraConfig = (builtins.readFile ./config/tmux.conf);
     # See https://www.github.com/nix-community/home-manager/issues/6266
     sensibleOnTop = false;
