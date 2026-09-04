@@ -28,12 +28,9 @@
         "context" # user@hostname
         "dir" # current directory
         "vcs" # git status
-      ];
-      POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS = [
-        "status" # exit code of the last command
-        "command_execution_time" # duration of the last command
         "terraform" # terraform workspace
       ];
+      POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS = [ ];
       POWERLEVEL9K_MODE = "nerdfont-complete";
       POWERLEVEL9K_VCS_DISABLE_GITSTATUS_FORMATTING = false;
       POWERLEVEL9K_VCS_GIT_ICON = "";
