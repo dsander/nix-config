@@ -31,7 +31,6 @@ lib.unique (
     gnused
     just
     fastfetch
-    unstablePkgs.terraform
     unstablePkgs.opentofu
     unstablePkgs.tofu-ls
     sshfs
