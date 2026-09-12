@@ -35,6 +35,7 @@
         (final: prev: {
           rbw = prev.rbw.override { };
         })
+       (import ./packages/overlays/herdr.nix)
         (final: prev: {
           hunk = hunk.packages.${final.system}.default;
         })
