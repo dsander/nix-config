@@ -22,6 +22,8 @@ lib.mkIf stablePkgs.stdenv.isDarwin {
       macos-option-as-alt = true
       macos-titlebar-style = tabs
       macos-icon = retro
+      keybind = super+arrow_left=previous_tab
+      keybind = super+arrow_right=next_tab
     '';
 
   targets.darwin.copyApps.enableChecks = false;

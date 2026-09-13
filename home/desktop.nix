@@ -7,8 +7,16 @@
       target = ".config/paru/paru.conf";
     };
     ghotty = {
-      source = ./config/ghostty/config;
       target = ".config/ghostty/config";
+      text =
+        builtins.readFile ./config/ghostty/config
+        + ''
+
+          # Linux overrides
+          keybind = ctrl+arrow_left=previous_tab
+          keybind = ctrl+arrow_right=next_tab
+          keybind = ctrl+t=new_tab
+        '';
     };
     electron = {
       source = ./config/electron-flags.conf;
@@ -17,4 +25,3 @@
   };
 
 }
-
