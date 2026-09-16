@@ -97,7 +97,7 @@ prefix = "ctrl+a"
 # focus_pane_right = "prefix+l"
 # cycle_pane_next = "prefix+tab"
 # cycle_pane_previous = "prefix+shift+tab"
-last_pane = "prefix+ctrl+a"
+last_tab = "prefix+ctrl+a"
 # split_vertical = "prefix+v"
 # split_horizontal = "prefix+minus"
 # close_pane = "prefix+x"
@@ -242,6 +242,8 @@ last_pane = "prefix+ctrl+a"
 # Accent color for highlights, borders, and navigation UI.
 # Accepts: hex (#89b4fa), named colors (cyan, blue, magenta), or rgb(r,g,b)
 # accent = "cyan"
+
+show_prefix_mode_bar = false
 
 # Background notification popup delivery
 [ui.toast]
