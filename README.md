@@ -99,6 +99,24 @@ Copy over things that are not synced:
 rsync --delete -av ~/Library/Thunderbird/ 192.168.1.180:./.thunderbird/
 ```
 
+### sshd setup (mainly on workstations)
+
+We need to have sshd AcceptEnv to ensure unicode characters still work in mulitplexers.
+Debian/Ubuntu enable `AcceptEnv LANG LC_*` out of the box, Arch/CachyOS do not.
+
+Check:
+
+```
+ssh <host> 'echo "LANG=${LANG:-<unset>}"; locale charmap'   # want UTF-8
+```
+
+Fix on the remote:
+
+```
+echo 'AcceptEnv LANG LC_*' | sudo tee /etc/ssh/sshd_config.d/10-locale.conf
+sudo systemctl restart sshd
+```
+
 ## Getting started on a new Mac
 
 Give full disk access to Terminal.
