@@ -288,7 +288,11 @@ in
         AddKeysToAgent = "yes";
       };
       "dev-vm" = {
-        HostName = "dev-vm.lan";
+        HostName = "dev-vm.discus-pirate.ts.net";
+        User = "dominik";
+        ForwardAgent = true;
+      };
+      "dev-vm.lan dev-vm.discus-pirate.ts.net 100.74.244.111" = {
         User = "dominik";
         ForwardAgent = true;
       };
