@@ -1,18 +1,22 @@
 # herdr from our fork : https://github.com/dsander/herdr/tree/add-last-tab-command
+#
+{ herdrFlake }:
 final: prev: {
-  herdr = prev.herdr.overrideAttrs (finalAttrs: prevAttrs: {
-    version = "0.9.0";
+  # 0.9.1 needs Zig >= 0.16.0; nixpkgs' herdr still builds with zig_0_15.
+  herdr = (prev.herdr.override { zig_0_15 = final.zig_0_16; }).overrideAttrs (finalAttrs: _: {
+    version = (builtins.fromTOML (builtins.readFile "${herdrFlake}/Cargo.toml")).package.version;
 
-    src = final.fetchFromGitHub {
-      owner = "dsander";
-      repo = "herdr";
-      rev = "bbafe648f8c563cdd73de1e88db8b32897103b6a";
-      hash = "sha256-HGliiOwCAxy1720OVoop6sRNjF9ijRsoeEJCF71Atpw=";
+    src = herdrFlake.outPath;
+
+    cargoDeps = final.rustPlatform.importCargoLock {
+      lockFile = "${herdrFlake}/Cargo.lock";
     };
 
-    cargoDeps = final.rustPlatform.fetchCargoVendor {
-      inherit (finalAttrs) pname version src;
-      hash = "sha256-CW/SF/cAPDv47gS5B7XbVZEE6LC9F1a2I1TLTJ4AWdw=";
+    zigDeps = final.zig_0_16.fetchDeps {
+      inherit (finalAttrs) pname version;
+      src = "${finalAttrs.src}/vendor/libghostty-vt";
+      fetchAll = true;
+      hash = "sha256-Cy0DdSvce+fhOFIfxHMQGF2b2j16UkS27UpGbfC42XI=";
     };
   });
 }

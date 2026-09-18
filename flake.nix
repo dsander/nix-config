@@ -8,6 +8,11 @@
 
     hunk.url = "github:modem-dev/hunk/v0.20.1";
 
+    herdr = {
+      url = "github:dsander/herdr/add-last-tab-command";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,6 +32,7 @@
     , nix-darwin
     , vscode-server
     , hunk
+    , herdr
     , ...
     }:
     let
@@ -35,7 +41,7 @@
         (final: prev: {
           rbw = prev.rbw.override { };
         })
-       (import ./packages/overlays/herdr.nix)
+       (import ./packages/overlays/herdr.nix { herdrFlake = herdr; })
         (final: prev: {
           hunk = hunk.packages.${final.system}.default;
         })
