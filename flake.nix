@@ -13,6 +13,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    fresh-editor = {
+      url = "github:sinelaw/fresh/v0.5.1";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +38,7 @@
     , vscode-server
     , hunk
     , herdr
+    , fresh-editor
     , ...
     }:
     let
@@ -41,9 +47,12 @@
         (final: prev: {
           rbw = prev.rbw.override { };
         })
-       (import ./packages/overlays/herdr.nix { herdrFlake = herdr; })
+        (import ./packages/overlays/herdr.nix { herdrFlake = herdr; })
         (final: prev: {
-          hunk = hunk.packages.${final.system}.default;
+          hunk = hunk.packages.${prev.stdenv.hostPlatform.system}.default;
+        })
+        (final: prev: {
+          fresh-editor = fresh-editor.packages.${prev.stdenv.hostPlatform.system}.default;
         })
       ];
 

@@ -12,6 +12,7 @@ lib.unique (
     unstablePkgs.lazydocker
     unstablePkgs.mcp-grafana
     unstablePkgs.herdr
+    fresh-editor
     hunk
 
     nodejs
