@@ -1,6 +1,6 @@
 { stablePkgs, lib, ... }:
 
-lib.mkIf stablePkgs.stdenv.isDarwin {
+lib.mkIf stablePkgs.stdenv.hostPlatform.isDarwin {
   home.sessionPath = lib.mkAfter [
     "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
     "/Applications/Postgres.app/Contents/Versions/latest/bin"

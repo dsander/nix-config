@@ -219,7 +219,7 @@ in
   };
 
   home.file = {
-    # hammerspoon = lib.mkIf stablePkgs.stdenv.isDarwin {
+    # hammerspoon = lib.mkIf stablePkgs.stdenv.hostPlatform.isDarwin {
     #   source = ./hammerspoon;
     #   target = ".hammerspoon";
     #   recursive = true;

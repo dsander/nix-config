@@ -94,7 +94,7 @@
           colors
         '' + (builtins.readFile ./config/zshrc));
         systemSpecific =
-          lib.mkOrder 1001 (if pkgs.stdenv.isDarwin then
+          lib.mkOrder 1001 (if pkgs.stdenv.hostPlatform.isDarwin then
             ''
               eval "$(/opt/homebrew/bin/brew shellenv)"
               # This seems to be necessary now to install psych (we also need libyaml)
