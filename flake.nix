@@ -117,6 +117,12 @@
           username = "dominik";
           desktop = true;
         };
+        megathron = {
+          kind = "linux-home";
+          system = "x86_64-linux";
+          username = "dominik";
+          desktop = true;
+        };
       };
 
       selectHostSpecs = kind: lib.filterAttrs (_: spec: spec.kind == kind) hostSpecs;
