@@ -8,6 +8,8 @@
 
     hunk.url = "github:modem-dev/hunk/v0.20.1";
 
+    atuin.url = "github:atuinsh/atuin/v18.23.0";
+
     herdr = {
       url = "github:dsander/herdr/add-last-tab-command";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -37,6 +39,7 @@
     , nix-darwin
     , vscode-server
     , hunk
+    , atuin
     , herdr
     , fresh-editor
     , ...
@@ -44,6 +47,7 @@
     let
       inherit (inputs.nixpkgs) lib;
       overlays = [
+        atuin.overlays.default
         (final: prev: {
           rbw = prev.rbw.override { };
         })
