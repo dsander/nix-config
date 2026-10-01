@@ -14,7 +14,7 @@
     };
 
     fresh-editor = {
-      url = "github:sinelaw/fresh/v0.5.1";
+      url = "github:sinelaw/fresh/v0.5.2";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
