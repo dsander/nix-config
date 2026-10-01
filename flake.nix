@@ -51,7 +51,7 @@
         (final: prev: {
           rbw = prev.rbw.override { };
         })
-        (import ./packages/overlays/herdr.nix { herdrFlake = herdr; })
+        herdr.overlays.default
         (final: prev: {
           hunk = hunk.packages.${prev.stdenv.hostPlatform.system}.default;
         })
