@@ -55,9 +55,7 @@
         (final: prev: {
           hunk = hunk.packages.${prev.stdenv.hostPlatform.system}.default;
         })
-        (final: prev: {
-          fresh-editor = fresh-editor.packages.${prev.stdenv.hostPlatform.system}.default;
-        })
+        fresh-editor.overlays.default
       ];
 
       inputs = { inherit nix-darwin home-manager nixpkgs nixpkgs-unstable; };
