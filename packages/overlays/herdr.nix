@@ -2,8 +2,7 @@
 #
 { herdrFlake }:
 final: prev: {
-  # 0.9.1 needs Zig >= 0.16.0; nixpkgs' herdr still builds with zig_0_15.
-  herdr = (prev.herdr.override { zig_0_15 = final.zig_0_16; }).overrideAttrs (finalAttrs: _: {
+  herdr = prev.herdr.overrideAttrs (finalAttrs: _: {
     version = (builtins.fromTOML (builtins.readFile "${herdrFlake}/Cargo.toml")).package.version;
 
     src = herdrFlake.outPath;
