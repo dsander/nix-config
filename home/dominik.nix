@@ -107,6 +107,7 @@ in
       # fetch.fsckobjects = true;
       # receive.fsckObjects = true;
       status.submoduleSummary = true;
+      submodule."spec/samples".ignore = "dirty";
       diff.submodule = "log";
       diff.ansible-vault = {
         textconv = "f() { ansible-vault view \"$1\" 2>/dev/null || cat \"$1\"; }; f";
