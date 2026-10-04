@@ -118,12 +118,14 @@
           system = "x86_64-linux";
           username = "dominik";
           desktop = true;
+          systemOnePasswordCli = true;
         };
         megathron = {
           kind = "linux-home";
           system = "x86_64-linux";
           username = "dominik";
           desktop = true;
+          systemOnePasswordCli = true;
         };
       };
 
@@ -200,6 +202,7 @@
         , homeDirectory ? "/home/${username}"
         , desktop ? false
         , platform ? "linux"
+        , systemOnePasswordCli ? false
         }:
         let
           inherit (mkPkgsFor { inherit kind system; }) stablePkgs unstablePkgs;
@@ -220,7 +223,11 @@
                   home = {
                     username = username;
                     homeDirectory = homeDirectory;
-                    packages = packageGroups.development;
+                    packages =
+                      if systemOnePasswordCli then
+                        lib.remove unstablePkgs._1password-cli packageGroups.development
+                      else
+                        packageGroups.development;
                   };
 
                   home.activation.make-zsh-default-shell = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
