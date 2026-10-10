@@ -119,6 +119,7 @@
           username = "dominik";
           desktop = true;
           systemOnePasswordCli = true;
+          systemZsh = true;
         };
         megathron = {
           kind = "linux-home";
@@ -126,6 +127,7 @@
           username = "dominik";
           desktop = true;
           systemOnePasswordCli = true;
+          systemZsh = true;
         };
       };
 
@@ -203,6 +205,9 @@
         , desktop ? false
         , platform ? "linux"
         , systemOnePasswordCli ? false
+          # Use the distro zsh as login shell so logins survive /nix and the
+          # profile in $HOME getting out of sync (e.g. after a snapper rollback).
+        , systemZsh ? false
         }:
         let
           inherit (mkPkgsFor { inherit kind system; }) stablePkgs unstablePkgs;
@@ -232,7 +237,7 @@
 
                   home.activation.make-zsh-default-shell = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
                     PATH="/usr/bin:/bin:$PATH"
-                    ZSH_PATH="/home/${username}/.nix-profile/bin/zsh"
+                    ZSH_PATH="${if systemZsh then "/usr/bin/zsh" else "/home/${username}/.nix-profile/bin/zsh"}"
                     if [[ $(getent passwd ${username}) != *"$ZSH_PATH" ]]; then
                       echo "Setting zsh as default shell (using chsh). Password might be necessary."
                       if ! grep -q $ZSH_PATH /etc/shells; then
