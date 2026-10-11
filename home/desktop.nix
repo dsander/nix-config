@@ -1,5 +1,11 @@
-{ unstablePkgs, stablePkgs, modulesPath, lib, ... }:
+{ config, unstablePkgs, stablePkgs, modulesPath, lib, ... }:
+let
+  onePasswordAgent = "${config.home.homeDirectory}/.1password/agent.sock";
+in
 {
+  # Use the 1Password SSH agent in shells and in the graphical session
+  home.sessionVariables.SSH_AUTH_SOCK = onePasswordAgent;
+  systemd.user.sessionVariables.SSH_AUTH_SOCK = onePasswordAgent;
 
   home.file = {
     paru = {
