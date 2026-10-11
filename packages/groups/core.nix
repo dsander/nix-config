@@ -3,7 +3,6 @@
 with stablePkgs; [
   unstablePkgs.btop
   bottom
-  coreutils
   drill
   dua
   duf
