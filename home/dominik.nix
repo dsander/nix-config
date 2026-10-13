@@ -11,6 +11,7 @@ in
     ./platforms/darwin.nix
     ./programs/zsh.nix
     ./programs/claude.nix
+    ./programs/clip.nix
   ];
   home.stateVersion = "25.11";
   disabledModules = [ "${modulesPath}/services/syncthing.nix" ];
