@@ -6,13 +6,21 @@
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
-    hunk.url = "github:modem-dev/hunk/v0.20.1";
-
     atuin.url = "github:atuinsh/atuin/v18.23.0";
 
     herdr = {
       url = "github:dsander/herdr/add-last-tab-command";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    tuicr = {
+      url = "github:agavra/tuicr/v0.27.0";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    dracula-tuicr = {
+      url = "github:dracula/tuicr/1b6ce673e64701a55c5f885b8bae5b7d24ef7571";
+      flake = false;
     };
 
     fresh-editor = {
@@ -38,10 +46,11 @@
     , home-manager
     , nix-darwin
     , vscode-server
-    , hunk
     , atuin
     , herdr
     , fresh-editor
+    , tuicr
+    , dracula-tuicr
     , ...
     }:
     let
@@ -53,7 +62,10 @@
         })
         herdr.overlays.default
         (final: prev: {
-          hunk = hunk.packages.${prev.stdenv.hostPlatform.system}.default;
+          tuicr = tuicr.packages.${prev.stdenv.hostPlatform.system}.default;
+          # Claude Code skill + pane wrappers (tmux, zellij, herdr, cmux).
+          tuicr-skill = "${tuicr}/skills/tuicr";
+          tuicr-dracula-themes = "${dracula-tuicr}/themes";
         })
         fresh-editor.overlays.default
       ];

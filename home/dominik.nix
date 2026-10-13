@@ -12,6 +12,7 @@ in
     ./programs/zsh.nix
     ./programs/claude.nix
     ./programs/clip.nix
+    ./programs/tuicr.nix
   ];
   home.stateVersion = "25.11";
   disabledModules = [ "${modulesPath}/services/syncthing.nix" ];

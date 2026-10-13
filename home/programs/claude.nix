@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, stablePkgs, ... }:
 # Second Claude Code account (`claudep`) living in ~/.claude-p, next to the
 # personal one in ~/.claude.
 #
@@ -25,13 +25,18 @@ let
   ];
 in
 {
+  home.sessionVariables.TUICR_PANE_DIRECTION = "down";
+
   home.shellAliases.claudep = "CLAUDE_CONFIG_DIR=$HOME/${profileDir} claude";
 
   home.file = lib.listToAttrs (map
     (name: lib.nameValuePair "${profileDir}/${name}" {
       source = config.lib.file.mkOutOfStoreSymlink "${personalDir}/${name}";
     })
-    (sharedDirs ++ sharedFiles));
+    (sharedDirs ++ sharedFiles)) // {
+    # Lives in the shared skills dir, so both accounts get it.
+    ".claude/skills/tuicr".source = stablePkgs.tuicr-skill;
+  };
 
   # ~/.claude does not exist on fresh installs; create the link targets so the
   # symlinks above are never dangling directories.

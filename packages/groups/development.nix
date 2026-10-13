@@ -13,7 +13,7 @@ lib.unique (
     unstablePkgs.mcp-grafana
     unstablePkgs.herdr
     fresh
-    hunk
+    tuicr
 
     nodejs
     nixpkgs-fmt
