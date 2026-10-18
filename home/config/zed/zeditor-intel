@@ -1,0 +1,4 @@
+#!/bin/sh
+# Keep Zed's Vulkan loader from opening the NVIDIA GPU during enumeration.
+export VK_DRIVER_FILES=/usr/share/vulkan/icd.d/intel_icd.json
+exec /usr/bin/zeditor "$@"

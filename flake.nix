@@ -150,9 +150,10 @@
         guiBase = [ ./home/profiles/gui-base.nix ];
       };
 
-      homeImportsFor = { desktop ? false, platform ? "linux" }:
+      homeImportsFor = { desktop ? false, platform ? "linux", hostName ? null }:
         hostImports.cli
         ++ lib.optionals desktop hostImports.guiBase
+        ++ lib.optionals (hostName == "megathron") [ ./home/hosts/megathron.nix ]
         ++ lib.optionals (platform == "wsl") [ ./home/platforms/wsl.nix ]
         ++ customModules;
 
@@ -230,7 +231,7 @@
             modules = [
               { _module.args = { inherit unstablePkgs stablePkgs; }; }
             ]
-            ++ homeImportsFor { inherit desktop platform; }
+            ++ homeImportsFor { inherit desktop platform hostName; }
             ++ [
               ({ config, lib, pkgs, ... }:
                 let

@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+vm=windows-11
+uri=qemu:///system
+gpu=0000:01:00.0
+gpu_audio=0000:01:00.1
+check_only=false
+
+die() {
+  printf 'winvm: %s\n' "$*" >&2
+  exit 1
+}
+
+driver_for() {
+  local device=$1
+  if [[ -L /sys/bus/pci/devices/$device/driver ]]; then
+    basename "$(readlink "/sys/bus/pci/devices/$device/driver")"
+  else
+    printf 'unbound\n'
+  fi
+}
+
+expect_driver() {
+  local device=$1 expected=$2 actual
+  actual=$(driver_for "$device")
+  [[ $actual == "$expected" ]] || die "$device uses $actual; expected $expected. Inspect GPU binding before starting the VM."
+}
+
+case ${1:-} in
+  -h|--help)
+    printf 'Usage: winvm [--check]\n'
+    exit 0
+    ;;
+  --check)
+    check_only=true
+    shift
+    ;;
+esac
+(( $# == 0 )) || die 'usage: winvm [--check]'
+
+for command in virsh timeout fuser nvidia-smi looking-glass-client; do
+  command -v "$command" >/dev/null || die "required command missing: $command"
+done
+
+[[ -n ${WAYLAND_DISPLAY:-}${DISPLAY:-} ]] || die 'no graphical session detected for Looking Glass'
+[[ -c /dev/kvmfr0 && -r /dev/kvmfr0 && -w /dev/kvmfr0 ]] || die '/dev/kvmfr0 is unavailable or inaccessible'
+[[ -f ${XDG_CONFIG_HOME:-$HOME/.config}/looking-glass/client.ini ]] || die 'Looking Glass client.ini is missing'
+
+[[ -d /sys/bus/pci/devices/$gpu && -d /sys/bus/pci/devices/$gpu_audio ]] || die 'RTX 5080 PCI functions are missing'
+[[ $(< /sys/bus/pci/devices/$gpu/vendor) == 0x10de && $(< /sys/bus/pci/devices/$gpu/device) == 0x2c02 ]] || die "$gpu is not the expected RTX 5080"
+
+if ! state=$(LC_ALL=C timeout 10s virsh -c "$uri" domstate "$vm" 2>&1); then
+  die "cannot query $vm; libvirt may be unavailable or stuck: $state"
+fi
+
+case $state in
+  running)
+    expect_driver "$gpu" vfio-pci
+    expect_driver "$gpu_audio" vfio-pci
+    printf 'winvm: %s is already running with the RTX 5080.\n' "$vm"
+    if $check_only; then exit 0; fi
+    exec looking-glass-client
+    ;;
+  'shut off') ;;
+  *) die "$vm is $state; resolve that state before using winvm" ;;
+esac
+
+expect_driver "$gpu" nvidia
+expect_driver "$gpu_audio" snd_hda_intel
+timeout 10s nvidia-smi -L >/dev/null || die 'NVIDIA driver cannot access the RTX 5080 in time'
+
+# Include DRM nodes as well as /dev/nvidia*: Zed held NVIDIA nodes while
+# rendering on Intel, which nvidia-smi alone did not make obvious.
+gpu_nodes=()
+for node in /dev/nvidia[0-9]* /dev/nvidiactl /dev/nvidia-modeset \
+            /dev/nvidia-uvm* /dev/dri/by-path/pci-0000:01:00.0-*; do
+  [[ -c $node ]] && gpu_nodes+=("$node")
+done
+(( ${#gpu_nodes[@]} > 0 )) || die 'no RTX 5080 device nodes found'
+
+if timeout 10s fuser -s "${gpu_nodes[@]}" 2>/dev/null; then
+  printf 'winvm: the RTX 5080 is in use; close these processes first:\n' >&2
+  timeout 10s fuser -v "${gpu_nodes[@]}" >&2 || true
+  exit 1
+else
+  fuser_status=$?
+  [[ $fuser_status -eq 1 ]] || die "GPU use check failed or timed out (exit $fuser_status)"
+fi
+
+printf 'winvm: RTX 5080 is free and %s is shut off.\n' "$vm"
+if $check_only; then exit 0; fi
+
+printf 'winvm: starting %s...\n' "$vm"
+LC_ALL=C timeout 60s virsh -c "$uri" start "$vm" || die 'VM start failed or timed out; inspect libvirt and GPU binding before retrying'
+
+if ! state=$(LC_ALL=C timeout 10s virsh -c "$uri" domstate "$vm" 2>&1); then
+  die "VM start returned but its state could not be queried: $state"
+fi
+[[ $state == running ]] || die "VM start returned but state is $state"
+expect_driver "$gpu" vfio-pci
+expect_driver "$gpu_audio" vfio-pci
+
+printf 'winvm: launching Looking Glass.\n'
+exec looking-glass-client
