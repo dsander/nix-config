@@ -212,6 +212,7 @@ in
       enter_accept = true;
       filter_mode_shell_up_key_binding = "session";
       search_mode = "daemon-fuzzy";
+      threads.capture = true;
       daemon = {
         enabled = true;
         autostart = true;
