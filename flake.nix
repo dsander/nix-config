@@ -6,7 +6,7 @@
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
-    atuin.url = "github:atuinsh/atuin/v18.23.0";
+    atuin.url = "github:atuinsh/atuin/v18.24.4";
 
     herdr = {
       url = "github:dsander/herdr/add-last-tab-command";
@@ -14,7 +14,7 @@
     };
 
     tuicr = {
-      url = "github:agavra/tuicr/v0.27.0";
+      url = "github:agavra/tuicr/v0.28.0";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -24,7 +24,7 @@
     };
 
     fresh-editor = {
-      url = "github:sinelaw/fresh/v0.5.2";
+      url = "github:sinelaw/fresh/v0.5.7";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
