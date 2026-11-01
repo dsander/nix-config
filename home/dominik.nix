@@ -301,6 +301,10 @@ in
         User = "dominik";
         ForwardAgent = true;
       };
+      "megathron megathron.lan megathron.discus-pirate.ts.net" = {
+        User = "dominik";
+        ForwardAgent = true;
+      };
       "amarr" = {
         HostName = "amarr.lan";
         User = "dominik";
