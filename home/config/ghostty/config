@@ -74,3 +74,4 @@ term = xterm-256color
 shell-integration-features = no-cursor
 cursor-style = block
 tab-inherit-working-directory = false
+keybind = ctrl+enter=unbind
